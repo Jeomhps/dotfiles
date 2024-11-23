@@ -5,6 +5,7 @@ alias home='cd ~'
 alias ..="cd .."
 alias doc="cd ~/Documents/"
 alias docker='podman'
+alias v='nvim'
 
 #Git Aliases
 alias g='lazygit'
