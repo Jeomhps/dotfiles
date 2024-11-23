@@ -1,0 +1,14 @@
+export PATH="/opt/homebrew/bin:$PATH"
+
+alias py='python3'
+alias home='cd ~'
+alias ..="cd .."
+alias doc="cd ~/Documents/"
+alias docker='podman'
+
+#Git Aliases
+alias g='lazygit'
+
+alias pod='podman run -it -v $(pwd):/mnt/my_c_code c-build-environment'
+
+eval "$(starship init zsh)"
