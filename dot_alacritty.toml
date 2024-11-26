@@ -1,0 +1,16 @@
+[window]
+opacity = 0.5
+padding = { x = 10, y = 10}
+blur = true
+startup_mode = "Maximized"
+decorations = "None"
+option_as_alt = "OnlyLeft"
+
+[font]
+normal = { family = "CaskaydiaCove Nerd Font Mono", style = "Regular" }
+
+[cursor]
+style = {shape = "Underline", blinking = "On"}
+
+[mouse]
+hide_when_typing = true
