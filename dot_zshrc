@@ -13,6 +13,8 @@ alias doc="cd ~/Documents/"
 alias docker='podman'
 alias v='nvim'
 
+alias cat="bat"
+
 #Git Aliases
 alias g='lazygit'
 
