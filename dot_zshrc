@@ -1,4 +1,10 @@
 export PATH="/opt/homebrew/bin:$PATH"
+source /opt/homebrew/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+source ~/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
 
 alias py='python3'
 alias home='cd ~'
