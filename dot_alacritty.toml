@@ -4,6 +4,8 @@ padding = { x = 10, y = 10}
 blur = true
 startup_mode = "Maximized"
 decorations = "None"
+
+#Only on macos
 option_as_alt = "OnlyLeft"
 
 [font]
