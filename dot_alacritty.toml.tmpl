@@ -1,15 +1,20 @@
 [window]
-# I need to change this and create a template for different os
-# 0.8 is on macos
-#opacity = 0.8
+{{ if eq .chezmoi.os "darwin" -}}
+
+opacity = 0.8
+#Next option is only on macos
+option_as_alt = "OnlyLeft"
+
+{{ else if eq .chezmoi.os "linux" -}}
+
 opacity = 0.97
+
+{{ end -}}
+
 padding = { x = 10, y = 10}
 blur = true
 startup_mode = "Maximized"
 decorations = "None"
-
-#Only on macos
-option_as_alt = "OnlyLeft"
 
 [font]
 normal = { family = "CaskaydiaCove Nerd Font Mono", style = "Regular" }
@@ -21,7 +26,8 @@ style = {shape = "Underline", blinking = "On"}
 hide_when_typing = true
 
 [terminal.shell]
-#same for this, need template
-#program = "${pkgs.zsh}/bin/zsh"
+{{ if eq .chezmoi.os "darwin" -}}
+program = "/bin/zsh"
+{{ else if eq .chezmoi.os "linux" -}}
 program = "/run/current-system/sw/bin/zsh"
-
+{{ end -}}

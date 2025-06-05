@@ -1,0 +1,33 @@
+{{ if eq .chezmoi.os "darwin" -}}
+
+export PATH="/opt/homebrew/bin:$PATH"
+export PATH="$PATH:$(go env GOPATH)/bin"
+source /opt/homebrew/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+alias test='echo hello mac'
+
+{{ else if eq .chezmoi.os "linux" -}}
+
+
+
+{{ end -}}
+
+alias py='python3'
+alias home='cd ~'
+alias ..="cd .."
+alias doc="cd ~/Documents/"
+alias docker='podman'
+alias v='nvim'
+alias ls='exa -l --color=always --group-directories-first'
+
+alias cat="bat"
+
+#Git Aliases
+alias g='lazygit'
+
+alias pod='podman run -it -v $(pwd):/mnt/my_c_code c-build-environment'
+
+eval "$(starship init zsh)"
