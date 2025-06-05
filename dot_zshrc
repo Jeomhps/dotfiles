@@ -14,6 +14,7 @@ alias doc="cd ~/Documents/"
 alias docker='podman'
 alias v='nvim'
 alias ls='exa -l --color=always --group-directories-first'
+alias ip ='ip --color=auto'
 
 alias cat="bat"
 
