@@ -1,5 +1,8 @@
 [window]
-opacity = 0.8
+# I need to change this and create a template for different os
+# 0.8 is on macos
+#opacity = 0.8
+opacity = 0.97
 padding = { x = 10, y = 10}
 blur = true
 startup_mode = "Maximized"
@@ -16,3 +19,9 @@ style = {shape = "Underline", blinking = "On"}
 
 [mouse]
 hide_when_typing = true
+
+[terminal.shell]
+#same for this, need template
+#program = "${pkgs.zsh}/bin/zsh"
+program = "/run/current-system/sw/bin/zsh"
+
