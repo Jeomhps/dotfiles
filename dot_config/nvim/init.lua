@@ -4,6 +4,13 @@ require("config.lazy")
 require("lspconfig").clangd.setup({})
 require("lspconfig").pyright.setup({})
 
+require("lspconfig")["tinymist"].setup({
+  settings = {
+    formatterMode = "typstyle",
+    semanticTokens = "disable",
+  },
+})
+
 require("catppuccin").setup({
   flavour = "auto", -- latte, frappe, macchiato, mocha
   background = { -- :h background
@@ -66,4 +73,9 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   pattern = "*.sage",
   command = "set filetype=python",
+})
+
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = "*.typ",
+  command = "set filetype=typst",
 })
