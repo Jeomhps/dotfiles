@@ -25,9 +25,7 @@ style = {shape = "Underline", blinking = "On"}
 [mouse]
 hide_when_typing = true
 
+{{ if eq .chezmoi.os "linux" -}}
 [terminal.shell]
-{{ if eq .chezmoi.os "darwin" -}}
-
-{{ else if eq .chezmoi.os "linux" -}}
 program = "/run/current-system/sw/bin/zsh"
 {{ end -}}
