@@ -62,20 +62,3 @@ require("catppuccin").setup({
 
 -- setup must be called before loading
 vim.cmd.colorscheme("catppuccin")
--- vim.cmd.colorscheme("catppuccin.Mocha")
---
-
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-  pattern = ".env.*",
-  command = "set filetype=dotenv",
-})
-
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-  pattern = "*.sage",
-  command = "set filetype=python",
-})
-
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-  pattern = "*.typ",
-  command = "set filetype=typst",
-})
