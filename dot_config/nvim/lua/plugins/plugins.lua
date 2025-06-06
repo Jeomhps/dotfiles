@@ -17,31 +17,4 @@ return {
     version = "1.*",
     opts = {}, -- lazy.nvim will implicitly calls `setup {}`
   },
-
-  {
-    "neovim/nvim-lspconfig",
-    ---@class PluginLspOpts
-    opts = {
-      ---@type lspconfig.options
-      servers = {
-        pyright = {},
-      },
-    },
-  },
-
-  {
-    "williamboman/mason.nvim",
-    opts = {
-      ensure_installed = {
-        "tinymist",
-      },
-    },
-  },
-
-  require("lspconfig")["tinymist"].setup({
-    settings = {
-      formatterMode = "typstyle",
-      semanticTokens = "disable",
-    },
-  }),
 }
