@@ -28,4 +28,15 @@ hide_when_typing = true
 {{ if eq .chezmoi.os "linux" -}}
 [terminal.shell]
 program = "/run/current-system/sw/bin/zsh"
+
+[[keyboard.bindings]]
+key = "C"
+mods = "Control"
+action = "Copy"
+
+[[keyboard.bindings]]
+key = "V"
+mods = "Control"
+action = "Paste"
+
 {{ end -}}
