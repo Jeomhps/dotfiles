@@ -1,3 +1,4 @@
+export EDITOR=vi
 {{ if eq .chezmoi.os "darwin" -}}
 
 export PATH="/opt/homebrew/bin:$PATH"
@@ -22,8 +23,8 @@ alias doc="cd ~/Documents/"
 alias docker='podman'
 alias v='nvim'
 alias ls='exa -l --color=always --group-directories-first'
-
 alias cat="bat"
+alias df="duf"
 
 #Git Aliases
 alias g='lazygit'
