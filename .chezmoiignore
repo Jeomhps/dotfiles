@@ -2,3 +2,7 @@ README.md
 LICENSE
 **/lazy-lock.json
 **/lazyvim.json
+.gitconfig.age
+{{ if contains .chezmoi.hostname "nixos" }}
+dot_config/nvim
+{{ end }}
