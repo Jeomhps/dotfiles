@@ -25,8 +25,18 @@ alias ..="cd .."
 alias doc="cd ~/Documents/"
 alias docker='podman'
 alias v='nvim'
+
+{{ if eq .chezmoi.os "darwin" -}}
+
+alias ls='exa --color=always --group-directories-first --icons'
+alias ll='exa -l --color=always --group-directories-first --icons'
+
+{{ else if eq .chezmoi.os "linux" -}}
+
 alias ls='exa --color=always --group-directories-first --icons=always'
 alias ll='exa -l --color=always --group-directories-first --icons=always'
+
+{{ end -}}
 alias cat="bat"
 alias df="duf"
 
@@ -37,7 +47,6 @@ alias pod='podman run -it -v $(pwd):/mnt/my_c_code c-build-environment'
 
 
 {{ if contains .chezmoi.hostname "nixos" }}
-
 alias update="sudo nixos-rebuild switch --flake .#"
 alias update-boot="sudo nixos-rebuild boot --flake .#"
 alias check="sudo nixos-rebuild dry-run --flake .#"
