@@ -35,4 +35,17 @@ alias g='lazygit'
 
 alias pod='podman run -it -v $(pwd):/mnt/my_c_code c-build-environment'
 
+
+{{ if contains .chezmoi.hostname "nixos" }}
+
+alias update="sudo nixos-rebuild switch --flake .#"
+alias update-boot="sudo nixos-rebuild boot --flake .#"
+alias check="sudo nixos-rebuild dry-run --flake .#"
+alias upgrade="nix flake update && sudo nixos-rebuild switch --flake .#"
+alias nix-clean="sudo nix-collect-garbage -d && nix-collect-garbage -d"
+alias nix-info="nixos-version && nix --version"
+alias nix-gen="sudo nix-env --list-generations --profile /nix/var/nix/profiles/system"
+alias rollback="sudo nixos-rebuild switch --flake .# --rollback"
+{{ end }}
+
 eval "$(starship init zsh)"
