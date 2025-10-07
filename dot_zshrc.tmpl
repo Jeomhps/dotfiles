@@ -1,5 +1,4 @@
 export EDITOR=nvim
-eval "$(starship init zsh)"
 {{ if eq .chezmoi.os "darwin" -}}
 
 export PATH="/opt/homebrew/bin:$PATH"
@@ -63,4 +62,5 @@ alias rollback="sudo nixos-rebuild switch --flake .# --rollback"
 gp() {
   gopass show -o "$1"
 }
+eval "$(starship init zsh)"
 
