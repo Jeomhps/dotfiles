@@ -10,4 +10,5 @@ LICENSE
 
 {{ if ne .chezmoi.os "darwin" -}}
 .docker/config.json
+.homebrew/
 {{ end }}
