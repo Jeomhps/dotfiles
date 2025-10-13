@@ -10,6 +10,7 @@ source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Export homebrew prefix
 export HOMEBREW_PREFIX="$(brew --prefix)"
+export HOMEBREW_BUNDLE_NO_UPGRADE=1
 
 alias test='echo hello mac'
 
@@ -18,7 +19,6 @@ alias test='echo hello mac'
 alias zed='zeditor'
 
 {{ end -}}
-
 
 source ~/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh
 
@@ -33,6 +33,11 @@ alias v='nvim'
 
 alias ls='exa --color=always --group-directories-first --icons'
 alias ll='exa -l --color=always --group-directories-first --icons'
+alias bbedit='brew bundle edit --global'
+alias bbinstall='brew bundle install --global'
+alias bbclean='brew bundle --global --cleanup'
+alias bbcheck='brew bundle check --global'
+alias bbupgrade='brew update && brew upgrade && brew bundle install --global --upgrade'
 
 {{ else if eq .chezmoi.os "linux" -}}
 
