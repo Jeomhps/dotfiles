@@ -1,0 +1,58 @@
+# Docker related
+brew "docker"
+brew "colima"
+brew "lazydocker"
+
+# To make both plugin work add "cliPluginsExtraDirs" to ~/.docker/config.json
+brew "docker-compose"
+brew "docker-buildx"
+
+brew "clamav"
+brew "act"
+brew "age"
+brew "openssl@3"
+brew "bat"
+brew "btop"
+brew "glib"
+brew "chezmoi"
+brew "duf"
+brew "fd"
+brew "fzf"
+brew "go"
+brew "gopass"
+brew "hyperfine"
+brew "iproute2mac"
+brew "kind"
+brew "lazygit"
+brew "ncdu"
+brew "neofetch"
+brew "neovim"
+brew "ouch"
+brew "starship"
+brew "tailspin"
+brew "tealdeer"
+brew "tinymist"
+brew "tree"
+brew "typst"
+brew "yazi"
+brew "zellij"
+
+# zsh
+brew "zsh-autocomplete"
+brew "zsh-autosuggestions"
+brew "zsh-syntax-highlighting"
+
+# --------------- cask ---------------
+
+cask "alacritty"
+cask "karabiner-elements"
+cask "obsidian"
+cask "omnissa-horizon-client"
+cask "qwerty-fr"
+cask "shottr"
+cask "signal"
+cask "thunderbird"
+cask "vmware-fusion"
+cask "zed"
+cask "osquery"
+
