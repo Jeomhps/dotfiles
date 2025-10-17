@@ -37,6 +37,7 @@ brew "typst"
 brew "yazi"
 brew "zellij"
 brew "ansible"
+brew "kubectl"
 
 # zsh
 brew "zsh-autocomplete"
