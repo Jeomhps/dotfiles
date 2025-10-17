@@ -25,7 +25,7 @@ brew "iproute2mac"
 brew "kind"
 brew "lazygit"
 brew "ncdu"
-brew "neofetch"
+# brew "neofetch" replaced by fastfetch
 brew "neovim"
 brew "ouch"
 brew "starship"
@@ -38,6 +38,7 @@ brew "yazi"
 brew "zellij"
 brew "ansible"
 brew "kubectl"
+brew "fastfetch"
 
 # zsh
 brew "zsh-autocomplete"
