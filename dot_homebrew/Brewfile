@@ -1,4 +1,4 @@
-# Docker related
+# ---> Docker related 
 brew "docker"
 brew "colima"
 brew "lazydocker"
@@ -39,6 +39,14 @@ brew "zellij"
 brew "ansible"
 brew "kubectl"
 brew "fastfetch"
+brew "just"
+brew "python@3.14"
+brew "uv"
+
+# brew "qemu"
+# brew "libvirt"
+# brew "pkg-config"
+
 
 # zsh
 brew "zsh-autocomplete"
@@ -49,16 +57,18 @@ brew "zsh-syntax-highlighting"
 
 cask "alacritty"
 cask "karabiner-elements"
-cask "obsidian"
-cask "omnissa-horizon-client"
+# cask "obsidian"
+# cask "omnissa-horizon-client"
 cask "qwerty-fr"
 cask "shottr"
 cask "signal"
 cask "thunderbird"
 cask "vmware-fusion"
 cask "zed"
-cask "osquery"
+# cask "osquery"
 
 # DevOps courses
-cask "virtualbox"
+#cask "virtualbox"
 cask "vagrant"
+#cask "multipass"
+
