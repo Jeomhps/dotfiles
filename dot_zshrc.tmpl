@@ -3,17 +3,16 @@ export EDITOR=nvim
 
 export PATH="/opt/homebrew/bin:$PATH"
 export PATH="$PATH:$(go env GOPATH)/bin"
+
 source /opt/homebrew/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source ~/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Export homebrew prefix
 export HOMEBREW_PREFIX="$(brew --prefix)"
 export HOMEBREW_BUNDLE_NO_UPGRADE=1
 
-alias test='echo hello mac'
-
+# Colima for docker
 export DOCKER_HOST="unix://$HOME/.colima/default/docker.sock"
 
 {{ else if eq .chezmoi.os "linux" -}}
@@ -47,6 +46,7 @@ alias bbupgrade='brew update && brew upgrade && brew bundle install --global --u
 
 alias ls='exa --color=always --group-directories-first --icons=always'
 alias ll='exa -l --color=always --group-directories-first --icons=always'
+alias la='exa -la --color=always --group-directories-first --icons=always'
 
 {{ end -}}
 alias cat="bat"
@@ -54,9 +54,6 @@ alias df="duf"
 
 #Git Aliases
 alias g='lazygit'
-
-alias pod='podman run -it -v $(pwd):/mnt/my_c_code c-build-environment'
-
 
 {{ if contains .chezmoi.hostname "nixos" }}
 alias update="sudo nixos-rebuild switch --flake .#"
