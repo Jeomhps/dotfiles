@@ -14,6 +14,8 @@ export HOMEBREW_BUNDLE_NO_UPGRADE=1
 
 alias test='echo hello mac'
 
+export DOCKER_HOST="unix://$HOME/.colima/default/docker.sock"
+
 {{ else if eq .chezmoi.os "linux" -}}
 
 alias zed='zeditor'
