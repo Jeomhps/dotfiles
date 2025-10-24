@@ -1,16 +1,21 @@
 export EDITOR=nvim
+
 {{ if eq .chezmoi.os "darwin" -}}
 
+# Homebrew
+export HOMEBREW_PREFIX="$(brew --prefix)"
+export HOMEBREW_BUNDLE_NO_UPGRADE=1
+
 export PATH="/opt/homebrew/bin:$PATH"
+export PATH="/opt/homebrew/sbin:$PATH"
+
+# go
 export PATH="$PATH:$(go env GOPATH)/bin"
 
+# Zsh plugin on macos
 source /opt/homebrew/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-# Export homebrew prefix
-export HOMEBREW_PREFIX="$(brew --prefix)"
-export HOMEBREW_BUNDLE_NO_UPGRADE=1
 
 # Colima for docker
 export DOCKER_HOST="unix://$HOME/.colima/default/docker.sock"
