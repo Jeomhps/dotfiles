@@ -63,7 +63,7 @@ cask "qwerty-fr"
 cask "shottr"
 cask "signal"
 cask "thunderbird"
-cask "vmware-fusion"
+# cask "vmware-fusion"
 cask "zed"
 # cask "osquery"
 
