@@ -3,11 +3,11 @@ export EDITOR=nvim
 {{ if eq .chezmoi.os "darwin" -}}
 
 # Homebrew
-export HOMEBREW_PREFIX="$(brew --prefix)"
-export HOMEBREW_BUNDLE_NO_UPGRADE=1
-
 export PATH="/opt/homebrew/bin:$PATH"
 export PATH="/opt/homebrew/sbin:$PATH"
+
+export HOMEBREW_PREFIX="$(brew --prefix)"
+export HOMEBREW_BUNDLE_NO_UPGRADE=1
 
 # go
 export PATH="$PATH:$(go env GOPATH)/bin"
