@@ -72,3 +72,4 @@ cask "zed"
 cask "vagrant"
 #cask "multipass"
 
+cask "pearcleaner"
