@@ -28,6 +28,7 @@ style = {shape = "Underline", blinking = "On"}
 [mouse]
 hide_when_typing = true
 
+#Change this to os nixos rather than linux since /run/current-sys is only in wsl
 {{ if eq .chezmoi.os "linux" -}}
 [terminal.shell]
 program = "/run/current-system/sw/bin/zsh"

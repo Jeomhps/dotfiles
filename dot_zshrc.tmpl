@@ -23,6 +23,9 @@ export DOCKER_HOST="unix://$HOME/.colima/default/docker.sock"
 {{ else if eq .chezmoi.os "linux" -}}
 
 alias zed='zeditor'
+export PATH="$PATH:$(go env GOPATH)/bin"
+export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$HOME/.cargo/bin"
 
 {{ end -}}
 
@@ -33,7 +36,8 @@ alias home='cd ~'
 alias ..="cd .."
 alias doc="cd ~/Documents/"
 #alias docker='podman'
-alias v='nvim'
+#alias v='nvim'
+alias v='hx'
 alias lzd='lazydocker'
 alias neofetch='fastfetch'
 
@@ -56,7 +60,7 @@ alias ll='exa -l --color=always --group-directories-first --icons=always'
 alias la='exa -la --color=always --group-directories-first --icons=always'
 
 {{ end -}}
-alias cat="bat"
+alias cat="bat -p"
 alias df="duf"
 
 #Git Aliases
@@ -71,6 +75,10 @@ alias nix-clean="sudo nix-collect-garbage -d && nix-collect-garbage -d"
 alias nix-info="nixos-version && nix --version"
 alias nix-gen="sudo nix-env --list-generations --profile /nix/var/nix/profiles/system"
 alias rollback="sudo nixos-rebuild switch --flake .# --rollback"
+
+alias drawio="/mnt/c/'Program Files'/draw.io/draw.io.exe"
+alias here="explorer.exe ."
+alias copy="clip.exe"
 {{ end }}
 
 # Gopass
@@ -79,4 +87,4 @@ gp() {
   gopass show -o "$1"
 }
 eval "$(starship init zsh)"
-
+eval "$(atuin init zsh)"
