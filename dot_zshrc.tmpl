@@ -30,7 +30,8 @@ export EDITOR="nvim"
 
 alias zed='zeditor'
 
-export PATH="$PATH:$(go env GOPATH)/bin"
+gopath="$(go env GOPATH)" || return
+export PATH="$PATH:$gopath/bin"
 export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:$HOME/.cargo/bin"
 export PATH="$PATH:$HOME/.my-scripts/bin"
