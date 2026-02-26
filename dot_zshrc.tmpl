@@ -23,6 +23,8 @@ source /opt/homebrew/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+source ~/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh
+
 # Colima
 export DOCKER_HOST="unix://$HOME/.colima/default/docker.sock"
 export EDITOR="nvim"
@@ -115,6 +117,16 @@ alias copy='clip.exe'
 gp() {
   gopass show -o "$1"
 }
+
+# Disable zsh history on all machine
+# since I use atuin.
+
+unsetopt APPEND_HISTORY
+unsetopt INC_APPEND_HISTORY
+unsetopt SHARE_HISTORY
+HISTSIZE=1000
+SAVEHIST=0
+HISTFILE=/dev/null
 
 eval "$(starship init zsh)"
 eval "$(atuin init zsh)"
