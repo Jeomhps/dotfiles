@@ -25,6 +25,7 @@ brew "iproute2mac"
 brew "kind"
 brew "lazygit"
 brew "ncdu"
+brew "gdu"
 # brew "neofetch" replaced by fastfetch
 brew "neovim"
 brew "ouch"
