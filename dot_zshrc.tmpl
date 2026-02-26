@@ -1,6 +1,3 @@
-#export EDITOR=nvim
-export EDITOR=v
-
 {{ if eq .chezmoi.os "darwin" -}}
 
 # Homebrew
@@ -20,6 +17,8 @@ source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Colima for docker
 export DOCKER_HOST="unix://$HOME/.colima/default/docker.sock"
+
+#export EDITOR=nvim
 
 {{ else if eq .chezmoi.os "linux" -}}
 
@@ -81,6 +80,7 @@ alias rollback="sudo nixos-rebuild switch --flake .# --rollback"
 alias drawio="/mnt/c/'Program Files'/draw.io/draw.io.exe"
 alias here="explorer.exe ."
 alias copy="clip.exe"
+export EDITOR=hx
 {{ end }}
 
 # Gopass
