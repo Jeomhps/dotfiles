@@ -21,7 +21,8 @@ auto-format = true
 name = "bash"
 file-types = [
   "sh",
-  { glob = ".zshrc.tmpl" }
+  { glob = "*zshrc*" }
+  { glob = "*bashrc*" }
 ]
 
 [[language]]
