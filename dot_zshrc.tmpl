@@ -1,49 +1,66 @@
-{{ if eq .chezmoi.os "darwin" -}}
+{{- $isDarwin := eq .chezmoi.os "darwin" -}}
+{{- $isLinux := eq .chezmoi.os "linux" -}}
+{{- $isWSL := and $isLinux (contains "microsoft" (lower .chezmoi.kernel.osrelease)) -}}
+{{- $isNixOS := and $isLinux (contains "nixos" (lower .chezmoi.hostname)) -}}
+
+# --------------------------------------------------
+# Environment
+# --------------------------------------------------
+
+{{- if $isDarwin }}
 
 # Homebrew
-export PATH="/opt/homebrew/bin:$PATH"
-export PATH="/opt/homebrew/sbin:$PATH"
-
+export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
 export HOMEBREW_PREFIX="$(brew --prefix)"
 export HOMEBREW_BUNDLE_NO_UPGRADE=1
 
-# go
+# Go
 export PATH="$PATH:$(go env GOPATH)/bin"
 
-# Zsh plugin on macos
+# Zsh plugins on macOS
 source /opt/homebrew/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-# Colima for docker
+# Colima
 export DOCKER_HOST="unix://$HOME/.colima/default/docker.sock"
+export EDITOR="nvim"
 
-#export EDITOR=nvim
-
-{{ else if eq .chezmoi.os "linux" -}}
+{{- else if $isLinux }}
 
 alias zed='zeditor'
+
 export PATH="$PATH:$(go env GOPATH)/bin"
 export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:$HOME/.cargo/bin"
 export PATH="$PATH:$HOME/.my-scripts/bin"
 
-{{ end -}}
+export EDITOR="hx"
 
 source ~/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh
 
+{{- end }}
+
+# --------------------------------------------------
+# Common aliases
+# --------------------------------------------------
+
 alias py='python3'
 alias home='cd ~'
-alias ..="cd .."
-alias doc="cd ~/Documents/"
-#alias docker='podman'
-#alias v='nvim'
+alias ..='cd ..'
+alias doc='cd ~/Documents/'
 alias v='hx'
 alias lzd='lazydocker'
 alias neofetch='fastfetch'
+alias cat='bat -p'
+alias df='duf'
+alias g='lazygit'
 
-{{ if eq .chezmoi.os "darwin" -}}
+# --------------------------------------------------
+# ls aliases
+# --------------------------------------------------
 
+{{- if $isDarwin }}
 alias ls='exa --color=always --group-directories-first --icons'
 alias ll='exa -l --color=always --group-directories-first --icons'
 alias la='exa -la --color=always --group-directories-first --icons'
@@ -53,40 +70,44 @@ alias bbinstall='brew bundle install --global'
 alias bbclean='brew bundle --global --cleanup'
 alias bbcheck='brew bundle check --global'
 alias bbupgrade='brew update && brew upgrade && brew bundle install --global --upgrade'
-
-{{ else if eq .chezmoi.os "linux" -}}
-
+{{- else if $isLinux }}
 alias ls='exa --color=always --group-directories-first --icons=always'
 alias ll='exa -l --color=always --group-directories-first --icons=always'
 alias la='exa -la --color=always --group-directories-first --icons=always'
+{{- end }}
 
-{{ end -}}
-alias cat="bat -p"
-alias df="duf"
+# --------------------------------------------------
+# NixOS
+# --------------------------------------------------
 
-#Git Aliases
-alias g='lazygit'
+{{- if $isNixOS }}
+alias update='sudo nixos-rebuild switch --flake .#'
+alias update-boot='sudo nixos-rebuild boot --flake .#'
+alias check='sudo nixos-rebuild dry-run --flake .#'
+alias upgrade='nix flake update && sudo nixos-rebuild switch --flake .#'
+alias nix-clean='sudo nix-collect-garbage -d && nix-collect-garbage -d'
+alias nix-info='nixos-version && nix --version'
+alias nix-gen='sudo nix-env --list-generations --profile /nix/var/nix/profiles/system'
+alias rollback='sudo nixos-rebuild switch --flake .# --rollback'
+{{- end }}
 
-{{ if contains .chezmoi.hostname "nixos" }}
-alias update="sudo nixos-rebuild switch --flake .#"
-alias update-boot="sudo nixos-rebuild boot --flake .#"
-alias check="sudo nixos-rebuild dry-run --flake .#"
-alias upgrade="nix flake update && sudo nixos-rebuild switch --flake .#"
-alias nix-clean="sudo nix-collect-garbage -d && nix-collect-garbage -d"
-alias nix-info="nixos-version && nix --version"
-alias nix-gen="sudo nix-env --list-generations --profile /nix/var/nix/profiles/system"
-alias rollback="sudo nixos-rebuild switch --flake .# --rollback"
+# --------------------------------------------------
+# WSL-only
+# --------------------------------------------------
 
-alias drawio="/mnt/c/'Program Files'/draw.io/draw.io.exe"
-alias here="explorer.exe ."
-alias copy="clip.exe"
-export EDITOR=hx
-{{ end }}
+{{- if $isWSL }}
+alias drawio="/mnt/c/Program Files/draw.io/draw.io.exe"
+alias here='explorer.exe .'
+alias copy='clip.exe'
+{{- end }}
 
-# Gopass
+# --------------------------------------------------
+# Functions / prompt
+# --------------------------------------------------
 
 gp() {
   gopass show -o "$1"
 }
+
 eval "$(starship init zsh)"
 eval "$(atuin init zsh)"
