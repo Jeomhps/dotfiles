@@ -16,3 +16,21 @@ auto-format = true
 name = "markdown"
 formatter = { command = "prettier", args = ["--parser", "markdown"] }
 auto-format = true
+
+[[language]]
+name = "bash"
+file-types = [
+  { glob = "*.zshrc.tmpl" }
+]
+
+[[language]]
+name = "bash"
+file-types = [
+  { glob = "*.toml.tmpl" }
+]
+
+[[language]]
+name = "json"
+file-types = [
+  { glob = "*.json.tmpl" }
+]
