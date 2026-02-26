@@ -11,6 +11,7 @@
 
 # Homebrew
 export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
+export PATH="$PATH:$HOME/.my-scripts/bin"
 export HOMEBREW_PREFIX="$(brew --prefix)"
 export HOMEBREW_BUNDLE_NO_UPGRADE=1
 
@@ -50,7 +51,7 @@ alias py='python3'
 alias home='cd ~'
 alias ..='cd ..'
 alias doc='cd ~/Documents/'
-alias v='hx'
+#alias v='hx'
 alias lzd='lazydocker'
 alias neofetch='fastfetch'
 alias cat='bat -p'
@@ -71,6 +72,9 @@ alias bbinstall='brew bundle install --global'
 alias bbclean='brew bundle --global --cleanup'
 alias bbcheck='brew bundle check --global'
 alias bbupgrade='brew update && brew upgrade && brew bundle install --global --upgrade'
+
+alias v='nvim'
+
 {{- else if $isLinux }}
 alias ls='exa --color=always --group-directories-first --icons=always'
 alias ll='exa -l --color=always --group-directories-first --icons=always'
@@ -90,6 +94,8 @@ alias nix-clean='sudo nix-collect-garbage -d && nix-collect-garbage -d'
 alias nix-info='nixos-version && nix --version'
 alias nix-gen='sudo nix-env --list-generations --profile /nix/var/nix/profiles/system'
 alias rollback='sudo nixos-rebuild switch --flake .# --rollback'
+
+alias v='hx'
 {{- end }}
 
 # --------------------------------------------------
