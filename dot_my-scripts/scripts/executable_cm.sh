@@ -2,7 +2,18 @@
 set -euo pipefail
 
 pick_managed() {
-  chezmoi managed | fzf --prompt="chezmoi> " --height=40% --reverse
+  chezmoi managed --path-style absolute \
+    | while IFS= read -r abs; do
+        rel="${abs#$HOME/}"
+        printf '%s\t%s\n' "$rel" "$abs"
+      done \
+    | fzf \
+        --prompt="chezmoi> " \
+        --height=40% \
+        --reverse \
+        --delimiter=$'\t' \
+        --with-nth=1 \
+    | cut -f2
 }
 
 normalize_target() {
