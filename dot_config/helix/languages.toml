@@ -20,17 +20,20 @@ auto-format = true
 [[language]]
 name = "bash"
 file-types = [
-  { glob = "*.zshrc.tmpl" }
+  "sh",
+  { glob = ".zshrc.tmpl" }
 ]
 
 [[language]]
-name = "bash"
+name = "toml"
 file-types = [
+  "toml",
   { glob = "*.toml.tmpl" }
 ]
 
 [[language]]
 name = "json"
 file-types = [
+  "json",
   { glob = "*.json.tmpl" }
 ]
