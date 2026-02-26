@@ -21,7 +21,7 @@ auto-format = true
 name = "bash"
 file-types = [
   "sh",
-  { glob = "*zshrc*" }
+  { glob = "*zshrc*" },
   { glob = "*bashrc*" }
 ]
 
