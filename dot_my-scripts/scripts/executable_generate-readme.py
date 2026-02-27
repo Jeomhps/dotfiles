@@ -29,6 +29,7 @@ def wrap_paragraph(s: str, width: int = 88) -> str:
     """
     Wrap text to a reasonable width for Markdown paragraphs.
     Preserves paragraph breaks if the YAML had blank lines.
+    Avoids breaking long tokens (e.g., URLs / markdown links).
     """
     s = (s or "").strip()
     if not s:
@@ -36,9 +37,17 @@ def wrap_paragraph(s: str, width: int = 88) -> str:
 
     paras = re.split(r"\n\s*\n", s)
     wrapped: list[str] = []
+
+    wrapper = textwrap.TextWrapper(
+        width=width,
+        break_long_words=False,  # <-- critical: do not split URLs
+        break_on_hyphens=False,  # <-- helps for long paths with hyphens
+    )
+
     for p in paras:
         p = normalize_spaces(p)
-        wrapped.append(textwrap.fill(p, width=width))
+        wrapped.append(wrapper.fill(p))
+
     return "\n\n".join(wrapped)
 
 
