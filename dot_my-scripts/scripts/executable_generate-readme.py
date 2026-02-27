@@ -63,6 +63,24 @@ def load_action(path: Path) -> dict:
     return data
 
 
+def infer_input_type(meta: dict) -> str:
+    """
+    Infer input type for docs. GitHub Actions inputs are strings at runtime,
+    but for documentation it's useful to show boolean when the default is true/false.
+    """
+    default = (meta or {}).get("default", None)
+
+    # YAML booleans (default: true/false without quotes) become Python bool
+    if isinstance(default, bool):
+        return "boolean"
+
+    # Sometimes people write default as a quoted string: "true"/"false"
+    if isinstance(default, str) and default.strip().lower() in ("true", "false"):
+        return "boolean"
+
+    return "string"
+
+
 def generate_inputs_table(inputs: dict) -> str:
     inputs = inputs or {}
     if not inputs:
@@ -81,8 +99,15 @@ def generate_inputs_table(inputs: dict) -> str:
         required = bool(meta.get("required", False))
         default = meta.get("default", None)
 
-        typ = "string"
-        default_str = "N/A" if default is None else str(default)
+        typ = infer_input_type(meta)
+
+        if default is None:
+            default_str = "N/A"
+        elif isinstance(default, bool):
+            # show as lowercase to match YAML/GitHub conventions
+            default_str = "true" if default else "false"
+        else:
+            default_str = str(default)
 
         secret = "yes" if str(name).isupper() else "no"
 
