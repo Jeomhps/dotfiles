@@ -1,7 +1,7 @@
 README.md
 LICENSE
 **/lazyvim.json
-.gitconfig
+#.gitconfig
 
 {{ if contains .chezmoi.hostname "nixos" }}
 .config/nvim
@@ -15,6 +15,7 @@ LICENSE
 
 {{if ne .chezmoi.os "windows" }}
 AppData/Roaming/Zed
+.gitconfig
 {{ end }}
 {{ if ne .chezmoi.os "linux" }}
 .config/zed
