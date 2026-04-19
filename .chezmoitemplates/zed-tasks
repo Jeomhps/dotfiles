@@ -1,0 +1,8 @@
+[
+  {
+    "label": "Edit Zed Settings Template",
+    "command": "zed",
+    "args": ["{{ .chezmoi.sourceDir }}/.chezmoitemplates/zed-settings"],
+    "reveal": "never",
+  },
+]

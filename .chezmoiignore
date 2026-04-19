@@ -12,3 +12,10 @@ LICENSE
 .docker/config.json
 .homebrew/
 {{ end }}
+
+{{if ne .chezmoi.os "windows" }}
+AppData/Roaming/Zed
+{{ end }}
+{{ if ne .chezmoi.os "linux" }}
+.config/zed
+{{ end }}
