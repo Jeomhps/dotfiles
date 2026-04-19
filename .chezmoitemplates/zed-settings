@@ -8,7 +8,7 @@
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
   "vim": {
-    "use_system_clipboard": "always",
+    "use_system_clipboard": "always"
   },
   "icon_theme": "Catppuccin Mocha",
   "agent": {
@@ -17,9 +17,9 @@
       "enable_thinking": true,
       // "enable_thinking": false,
       "provider": "copilot_chat",
-      "model": "claude-sonnet-4.6",
+      "model": "claude-sonnet-4.6"
     },
-    "model_parameters": [],
+    "model_parameters": []
   },
   "wsl_connections": [
     {
@@ -27,10 +27,10 @@
       "user": null,
       "projects": [
         {
-          "paths": ["/home/jeomhps/freebsd"],
-        },
-      ],
-    },
+          "paths": ["/home/jeomhps/freebsd"]
+        }
+      ]
+    }
   ],
   "vim_mode": true,
   "ui_font_size": 16,
@@ -38,7 +38,7 @@
   "theme": {
     "mode": "system",
     "light": "Ayu Light",
-    "dark": "Catppuccin Mocha",
+    "dark": "Catppuccin Mocha"
   },
   "auto_install_extensions": {
     "catppuccin": true,
@@ -47,6 +47,9 @@
     "html": true,
     "log": true,
     "toml": true,
-    "typst": true,
+    "typst": true
   },
+  "file_types": {
+    "JSON": ["*.json.tmpl", "**/zed-settings", "**/zed-keymap", "**/zed-tasks"]
+  }
 }
