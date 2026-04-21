@@ -50,6 +50,15 @@
     "typst": true
   },
   "file_types": {
-    "JSON": ["*.json.tmpl", "**/zed-settings", "**/zed-keymap", "**/zed-tasks"]
-  }
+    "JSONC": ["*.json.tmpl", "**/zed-settings", "**/zed-keymap", "**/zed-tasks"]
+  },
+  // "context_servers": {
+  //   "drawio": {
+  //     "enabled": true,
+  //     "remote": false,
+  //     "command": "bunx",
+  //     "args": ["drawio-mcp-server", "--editor"],
+  //     "env": {}
+  //   }
+  // }
 }

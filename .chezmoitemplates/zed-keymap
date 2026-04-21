@@ -19,7 +19,9 @@
       "space a i": "agent::ToggleFocus",
       "escape": "workspace::CloseActiveDock",
       "space space": "file_finder::Toggle",
-      "space c": "editor::ToggleComments"
+      "space c": "editor::ToggleComments",
+      "space .": ["task::Spawn", {"task_name": "Edit Dotfiles"}],
+      "space d a": ["task::Spawn", {"task_name": "Chezmoi Apply"}]
     }
   },
   {
