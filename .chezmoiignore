@@ -17,6 +17,7 @@ LICENSE
 AppData/Roaming/Zed
 .gitconfig
 {{ end }}
-{{ if ne .chezmoi.os "linux" }}
+
+{{ if and (ne .chezmoi.os "linux") (ne .chezmoi.os "darwin") }}
 .config/zed
 {{ end }}
