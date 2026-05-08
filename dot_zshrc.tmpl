@@ -31,7 +31,7 @@ export EDITOR="nvim"
 
 {{- else if $isLinux }}
 
-alias zed='zeditor'
+#alias zed='zeditor'
 
 gopath="$(go env GOPATH)" || return
 export PATH="$PATH:$gopath/bin"
