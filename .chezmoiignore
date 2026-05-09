@@ -17,8 +17,24 @@ LICENSE
 .homebrew/
 {{ end }}
 
+# Windows only uses Zed — ignore everything else
+{{ if eq .chezmoi.os "windows" }}
+.zshrc
+.zsh/
+.alacritty.toml
+.gitconfig
+.config/starship.toml
+.config/helix
+.config/lazygit
+.config/zellij
+.config/eza
+.config/atuin
+.my-scripts/
+.docker/
+.homebrew/
+{{ end }}
+
 # Windows-only
 {{ if ne .chezmoi.os "windows" }}
 AppData/
-.gitconfig
 {{ end }}
