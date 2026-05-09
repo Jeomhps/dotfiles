@@ -1,0 +1,34 @@
+[includeIf "hasconfig:remote.*.url:git@github.com:*/**"]
+	path = ~/.config/git/config-personal-github
+
+[includeIf "hasconfig:remote.*.url:https://github.com/**"]
+	path = ~/.config/git/config-personal-github
+
+[pull]
+	rebase = true
+
+{{- if index . "work_git_email" }}
+
+[includeIf "hasconfig:remote.*.url:git@{{ .work_vcs_host }}:*/**"]
+	path = ~/.config/git/config-work
+
+[includeIf "hasconfig:remote.*.url:https://{{ .work_vcs_host }}/**"]
+	path = ~/.config/git/config-work
+{{- end }}
+
+{{- if index . "work_ado_org" }}
+
+[includeIf "hasconfig:remote.*.url:git@ssh.dev.azure.com:v3/{{ .work_ado_org }}/**"]
+	path = ~/.config/git/config-work
+
+[includeIf "hasconfig:remote.*.url:https://dev.azure.com/{{ .work_ado_org }}/**"]
+	path = ~/.config/git/config-work
+
+[includeIf "hasconfig:remote.*.url:https://{{ .work_ado_org }}@dev.azure.com/**"]
+	path = ~/.config/git/config-work
+{{- end }}
+
+{{- if eq .chezmoi.os "windows" }}
+[core]
+	fileMode = false
+{{- end }}
