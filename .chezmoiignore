@@ -1,23 +1,29 @@
 README.md
 LICENSE
 **/lazyvim.json
-#.gitconfig
 
-{{ if contains .chezmoi.hostname "nixos" }}
+{{- $isLinux := eq .chezmoi.os "linux" }}
+{{- $isWSL := and $isLinux (contains "microsoft" (lower .chezmoi.kernel.osrelease)) }}
+{{- $isNixOS := and $isLinux (contains "nixos" (lower .chezmoi.hostname)) }}
+
+# nvim is managed by Nix on NixOS/WSL, by chezmoiexternal elsewhere
+{{ if or $isNixOS $isWSL }}
 .config/nvim
+{{ end }}
+
+# Zed runs on the Windows host, not inside WSL
+{{ if $isWSL }}
 .config/zed
 {{ end }}
 
-{{ if ne .chezmoi.os "darwin" -}}
+# macOS-only
+{{ if ne .chezmoi.os "darwin" }}
 .docker/config.json
 .homebrew/
 {{ end }}
 
-{{if ne .chezmoi.os "windows" }}
+# Windows-only
+{{ if ne .chezmoi.os "windows" }}
 AppData/
 .gitconfig
-{{ end }}
-
-{{ if and (ne .chezmoi.os "linux") (ne .chezmoi.os "darwin") }}
-.config/zed
 {{ end }}
