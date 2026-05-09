@@ -4,8 +4,48 @@
 [includeIf "hasconfig:remote.*.url:https://github.com/**"]
 	path = ~/.config/git/config-personal-github
 
+[core]
+	editor = nvim
+	excludesfile = ~/.config/git/ignore
+	pager = less -FRX
+
+[color]
+	ui = auto
+
+[init]
+	defaultBranch = main
+
 [pull]
 	rebase = true
+
+[rebase]
+	autostash = true
+
+[fetch]
+	prune = true
+
+[push]
+	default = simple
+
+[rerere]
+	enabled = true
+
+[diff]
+	algorithm = histogram
+
+[merge]
+	conflictstyle = diff3
+
+[alias]
+	st = status -sb
+	co = checkout
+	br = branch
+	ci = commit
+	lg = log --graph --decorate --pretty=format:'%C(bold blue)%h%Creset - %Cgreen%s%Creset %C(dim)%an, %ar%Creset' --all
+	lol = log --graph --oneline --decorate --all
+	amend = commit --amend --no-edit
+	unstage = reset HEAD --
+	last = log -1 --pretty=format:'%h %s (%cr)'
 
 {{- if index . "work_git_email" }}
 
