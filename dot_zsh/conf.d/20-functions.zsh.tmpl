@@ -47,6 +47,38 @@ f() {
   fd --hidden "$1"
 }
 
+# Fix chezmoi and neovim config remotes to use SSH instead of HTTPS
+# Safe to run multiple times — skips repos already on SSH
+fix-dotfiles-upstream() {
+  local -A repos=(
+    [chezmoi]="$HOME/.local/share/chezmoi"
+    [neovim]="$HOME/.config/neovim-config"
+  )
+
+  for name dir in ${(kv)repos}; do
+    if [[ ! -d "$dir/.git" ]]; then
+      print -P "%F{yellow}%B$name%b%f: not found at $dir, skipping"
+      continue
+    fi
+
+    local current
+    current=$(git -C "$dir" remote get-url origin 2>/dev/null) || {
+      print -P "%F{yellow}%B$name%b%f: no origin remote, skipping"
+      continue
+    }
+
+    if [[ "$current" == git@* ]]; then
+      print -P "%F{green}%B$name%b%f: already using SSH ($current)"
+      continue
+    fi
+
+    local ssh_url
+    ssh_url=$(echo "$current" | sed 's|https://github.com/|git@github.com:|')
+    git -C "$dir" remote set-url origin "$ssh_url"
+    print -P "%F{green}%B$name%b%f: updated → $ssh_url"
+  done
+}
+
 # Open a file or directory with the right app
 o() {
   local target="${1:-.}"
