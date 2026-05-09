@@ -1,0 +1,13 @@
+{{- $isLinux := eq .chezmoi.os "linux" -}}
+{{- $isNixOS := and $isLinux (contains "nixos" (lower .chezmoi.hostname)) -}}
+{{- $isWindows := eq .chezmoi.os "windows" -}}
+
+{{- if and (not $isNixOS) (not $isWindows) }}
+[".config/nvim"]
+  type = "git-repo"
+  url = "https://github.com/jeomhps/neovim"
+  refreshPeriod = "0s"
+
+  [".config/nvim".clone]
+    args = ["--branch", "main", "--single-branch"]
+{{- end }}
