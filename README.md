@@ -38,6 +38,10 @@ Templates use `.chezmoi.os`, `.chezmoi.hostname`, and `.chezmoi.kernel.osrelease
 
 On a work machine, create `~/.config/chezmoi/chezmoi.toml` **before** running `chezmoi apply` (or `chezmoi init --apply`). This file is never tracked — it is chezmoi's own local config and stays private on the machine.
 
+### WSL HTTPS Git Operations
+
+If you are using HTTPS Git operations in WSL, you will need Git installed on the Windows host. This is because the configuration uses the Windows Git Credential Manager for secure credential storage. Ensure Git for Windows is installed and properly configured on your Windows host to enable seamless authentication in WSL.
+
 ```toml
 [data]
   work_git_username = "yourworkname"
