@@ -33,3 +33,8 @@ export EDITOR="nvim"
 
 export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
+
+{{- if and (not $isNixOS) (not (eq .chezmoi.os "windows")) }}
+# Point neovim to the nvim/ subdirectory inside the cloned repo
+export NVIM_APPNAME="neovim-config/nvim"
+{{- end }}
