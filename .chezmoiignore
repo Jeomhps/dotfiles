@@ -6,11 +6,6 @@ LICENSE
 {{- $isWSL := and $isLinux (contains "microsoft" (lower .chezmoi.kernel.osrelease)) }}
 {{- $isNixOS := and $isLinux (contains "nixos" (lower .chezmoi.hostname)) }}
 
-# nvim is managed by Nix on NixOS/WSL, by chezmoiexternal elsewhere
-{{ if or $isNixOS $isWSL }}
-.config/nvim
-{{ end }}
-
 # Zed runs on the Windows host, not inside WSL
 {{ if $isWSL }}
 .config/zed
