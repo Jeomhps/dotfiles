@@ -3,8 +3,3 @@
 	name  = {{ .work_git_username }}
 	email = {{ .work_git_email }}
 {{- end }}
-{{- if and (index . "work_ado_org") (contains "microsoft" .chezmoi.kernel.osrelease) }}
-
-[credential "https://dev.azure.com"]
-	helper = git-credential-manager.exe
-{{- end }}

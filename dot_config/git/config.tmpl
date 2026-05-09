@@ -9,6 +9,14 @@
 	excludesfile = ~/.config/git/ignore
 	pager = less -FRX
 
+[credential]
+	{{- if contains "microsoft" .chezmoi.kernel.osrelease }}
+	helper = /mnt/c/Program Files/Git/mingw64/bin/git-credential-manager.exe
+	{{- else }}
+	helper = manager
+	{{- end }}
+	useHttpPath = true
+
 [color]
 	ui = auto
 
