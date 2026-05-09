@@ -1,0 +1,35 @@
+{{- $isDarwin := eq .chezmoi.os "darwin" -}}
+{{- $isLinux := eq .chezmoi.os "linux" -}}
+{{- $isWSL := and $isLinux (contains "microsoft" (lower .chezmoi.kernel.osrelease)) -}}
+{{- $isNixOS := and $isLinux (contains "nixos" (lower .chezmoi.hostname)) -}}
+
+# ── Environment variables & PATH ─────────────────────────────────────────────
+
+{{- if $isDarwin }}
+export HOMEBREW_PREFIX="$(brew --prefix)"
+export HOMEBREW_BUNDLE_NO_UPGRADE=1
+export DOCKER_HOST="unix://$HOME/.colima/default/docker.sock"
+
+export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
+export PATH="$PATH:$(go env GOPATH)/bin"
+export PATH="$PATH:$HOME/.my-scripts/bin"
+
+export EDITOR="nvim"
+{{- else if $isLinux }}
+export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$HOME/.cargo/bin"
+export PATH="$PATH:$HOME/.my-scripts/bin"
+
+gopath="$(go env GOPATH 2>/dev/null)" && export PATH="$PATH:$gopath/bin"
+
+{{- if $isWSL }}
+export EDITOR="nvim"
+{{- else if $isNixOS }}
+export EDITOR="hx"
+{{- else }}
+export EDITOR="nvim"
+{{- end }}
+{{- end }}
+
+export LANG="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"

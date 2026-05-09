@@ -1,0 +1,76 @@
+{{- $isDarwin := eq .chezmoi.os "darwin" -}}
+{{- $isLinux := eq .chezmoi.os "linux" -}}
+{{- $isWSL := and $isLinux (contains "microsoft" (lower .chezmoi.kernel.osrelease)) -}}
+
+# ── Shell functions ───────────────────────────────────────────────────────────
+
+# Show what's listening on which port
+ports() {
+  ss -tlnp
+}
+
+# Quick backup of a file before editing
+backup() {
+  cp "$1" "$1.bak" && echo "backed up → $1.bak"
+}
+
+# Docker cleanup — prune stopped containers, dangling images, unused volumes
+docker-clean() {
+  docker container prune -f
+  docker image prune -f
+  docker volume prune -f
+  echo "docker cleaned up"
+}
+
+# Quick gopass secret retrieval
+gp() {
+  gopass show -o "$1"
+}
+
+# Create a directory and cd into it
+mkcd() {
+  mkdir -p "$1" && cd "$1"
+}
+
+# cd up N directories: up 3  →  ../../..
+up() {
+  local d=""
+  local limit="${1:-1}"
+  for ((i=1; i<=limit; i++)); do
+    d="../$d"
+  done
+  cd "$d" || return 1
+}
+
+# Quick find by name in current tree (fd is faster than find)
+f() {
+  fd --hidden "$1"
+}
+
+# Open a file or directory with the right app
+o() {
+  local target="${1:-.}"
+
+{{- if $isDarwin }}
+  open "$target"
+{{- else if $isWSL }}
+  local winpath
+  winpath="$(wslpath -w "$target")"
+
+  # Clean up leftover suspended explorer.exe stubs from previous calls
+  pkill -x -T explorer.exe 2>/dev/null
+
+  # Dispatch by extension
+  case "${target:l}" in
+    *.drawio)
+      "/mnt/c/Program Files/draw.io/draw.io.exe" "$winpath" &>/dev/null &!
+      ;;
+    *)
+      # Directories and all other files: let Windows pick the default app
+      explorer.exe "$winpath" &>/dev/null &!
+      ;;
+  esac
+{{- else }}
+  xdg-open "$target" &
+{{- end }}
+}

@@ -1,0 +1,62 @@
+{{- $isDarwin := eq .chezmoi.os "darwin" -}}
+{{- $isLinux := eq .chezmoi.os "linux" -}}
+{{- $isWSL := and $isLinux (contains "microsoft" (lower .chezmoi.kernel.osrelease)) -}}
+{{- $isNixOS := and $isLinux (contains "nixos" (lower .chezmoi.hostname)) -}}
+
+# ── Aliases ───────────────────────────────────────────────────────────────────
+
+# General
+alias py='python3'
+alias home='cd ~'
+alias ..='cd ..'
+alias lzd='lazydocker'
+alias neofetch='fastfetch'
+alias cat='bat -p'
+alias df='duf'
+alias g='lazygit'
+
+# ls / eza
+{{- if $isDarwin }}
+alias ls='eza --color=always --group-directories-first --icons'
+alias ll='eza -l --color=always --group-directories-first --icons'
+alias la='eza -la --color=always --group-directories-first --icons'
+{{- else if $isLinux }}
+alias ls='eza --color=always --group-directories-first --icons=always'
+alias ll='eza -l --color=always --group-directories-first --icons=always'
+alias la='eza -la --color=always --group-directories-first --icons=always'
+{{- end }}
+
+# Editor
+{{- if or $isDarwin $isWSL }}
+alias v='nvim'
+{{- else if $isNixOS }}
+alias v='hx'
+{{- else }}
+alias v='nvim'
+{{- end }}
+
+# NixOS
+{{- if $isNixOS }}
+alias update='sudo nixos-rebuild switch --flake .#'
+alias update-boot='sudo nixos-rebuild boot --flake .#'
+alias check='sudo nixos-rebuild dry-run --flake .#'
+alias upgrade='nix flake update && sudo nixos-rebuild switch --flake .#'
+alias nix-clean='sudo nix-collect-garbage -d && nix-collect-garbage -d'
+alias nix-info='nixos-version && nix --version'
+alias nix-gen='sudo nix-env --list-generations --profile /nix/var/nix/profiles/system'
+alias rollback='sudo nixos-rebuild switch --flake .# --rollback'
+{{- end }}
+
+# macOS / Homebrew
+{{- if $isDarwin }}
+alias bbedit='brew bundle edit --global'
+alias bbinstall='brew bundle install --global'
+alias bbclean='brew bundle --global --cleanup'
+alias bbcheck='brew bundle check --global'
+alias bbupgrade='brew update && brew upgrade && brew bundle install --global --upgrade'
+{{- end }}
+
+# WSL
+{{- if $isWSL }}
+alias copy='clip.exe'
+{{- end }}
