@@ -1,0 +1,6 @@
+{{- $isLinux := eq .chezmoi.os "linux" -}}
+{{- $isNixOS := and $isLinux (contains "nixos" (lower .chezmoi.hostname)) -}}
+{{- $isWindows := eq .chezmoi.os "windows" -}}
+{{- if and (not $isNixOS) (not $isWindows) -}}
+{{ .chezmoi.homeDir }}/.local/share/neovim-config/nvim
+{{- end -}}

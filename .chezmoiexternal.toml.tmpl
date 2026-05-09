@@ -3,11 +3,11 @@
 {{- $isWindows := eq .chezmoi.os "windows" -}}
 
 {{- if and (not $isNixOS) (not $isWindows) }}
-[".config/nvim"]
+["local/share/neovim-config"]
   type = "git-repo"
   url = "https://github.com/jeomhps/neovim"
   refreshPeriod = "0s"
 
-  [".config/nvim".clone]
+  ["local/share/neovim-config".clone]
     args = ["--branch", "main", "--single-branch"]
 {{- end }}
