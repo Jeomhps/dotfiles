@@ -1,0 +1,4 @@
+# Work-specific settings for Zed
+edit_predictions:
+  copilot:
+    enterprise_uri: "{{ .zed_copilot_uri }}"

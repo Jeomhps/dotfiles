@@ -48,6 +48,7 @@ If you are using HTTPS Git operations in WSL, you will need Git installed on the
   work_git_email    = "you@company.com"
   work_vcs_host     = "git.company.com"
   work_ado_org      = "mycompany"      # optional — only add if you use Azure DevOps
+  zed_copilot_uri   = "https://your.enterprise.domain"  # Zed Copilot enterprise URI
 ```
 
 **Effect of each key:**
@@ -58,14 +59,42 @@ If you are using HTTPS Git operations in WSL, you will need Git installed on the
 | `work_git_email` | yes | Email used in commits on work repos |
 | `work_vcs_host` | yes | Work VCS hostname — activates SSH + HTTPS `includeIf` blocks |
 | `work_ado_org` | no | Azure DevOps org name — activates SSH + HTTPS `includeIf` blocks for `dev.azure.com` |
+| `zed_copilot_uri` | no | Zed Copilot enterprise URI — activates custom Copilot endpoint |
 
 When these keys are present, chezmoi will:
 - Add `[includeIf]` blocks to `~/.gitconfig` that load `~/.gitconfig-work` for any repo whose remote matches `work_vcs_host` (and `dev.azure.com/<work_ado_org>` if set)
 - Deploy `~/.gitconfig-work` with the work `[user]` block
+- Include custom Zed Copilot configuration if `zed_copilot_uri` is defined
 
 `~/.gitconfig-personal` is always deployed and acts as the default identity for any repo not matched by the `includeIf` blocks (e.g. repos with no remote, or other hosts).
 
 On machines **without** this local config, none of the above is deployed — no action required.
+
+## Zed Copilot Configuration
+
+To configure a custom Copilot endpoint for Zed in a work environment, define the `zed_copilot_uri` variable in your `~/.config/chezmoi/chezmoi.toml` file. This will conditionally include the work-specific Zed configuration.
+
+### Windows Setup
+
+On Windows, the `chezmoi.toml` file should be created at:
+- `%USERPROFILE%\.config\chezmoi\chezmoi.toml`
+
+For example:
+```toml
+[data]
+  zed_copilot_uri = "https://your.enterprise.domain"
+```
+
+### macOS/Linux Setup
+
+On macOS and Linux, the `chezmoi.toml` file should be created at:
+- `~/.config/chezmoi/chezmoi.toml`
+
+For example:
+```toml
+[data]
+  zed_copilot_uri = "https://your.enterprise.domain"
+```
 
 ## Neovim config
 

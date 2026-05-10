@@ -12,5 +12,12 @@
 {{- $agent := fromYaml (include ".chezmoitemplates/zed/agent.yaml") }}
 {{- $extensions := fromYaml (include ".chezmoitemplates/zed/extensions.yaml") }}
 {{- $layout := fromYaml (include ".chezmoitemplates/zed/layout.yaml") }}
+
 {{- $merged := merge $base $theme $agent $extensions $layout }}
+{{- if index . "zed_copilot_uri" }}
+  {{- $workContent := include ".chezmoitemplates/zed/work.yaml" | replace "{{ .zed_copilot_uri }}" .zed_copilot_uri }}
+  {{- $work := fromYaml $workContent }}
+  {{- $merged = merge $merged $work }}
+{{- end }}
+
 {{ toPrettyJson $merged }}
