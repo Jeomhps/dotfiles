@@ -6,5 +6,10 @@
   "ui_font_size": 16,
   "buffer_font_size": 15,
   "file_types": {
-    "JSONC": ["*.json.tmpl", "**/zed-settings", "**/zed-keymap", "**/zed-tasks"]
+    "JSONC": [
+      "*.json.tmpl",
+      "**/zed-settings",
+      "**/zed-keymap",
+      "**/zed-tasks"
+    ]
   }
