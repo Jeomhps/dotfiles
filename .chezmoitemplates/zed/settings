@@ -26,29 +26,5 @@
   // ============================================================================
   // Extensions Settings
   // ============================================================================
-{{ template "zed/extensions.jsonc" . }},
-
-  // ============================================================================
-  // OS-Specific Settings
-  // ============================================================================
-{{- if eq .chezmoi.os "windows" }}
-  "terminal": {
-    "shell": {
-      "program": "pwsh",
-      "args": ["-NoLogo"]
-    }
-  }
-{{- else if eq .chezmoi.os "linux" }}
-  "terminal": {
-    "shell": {
-      "program": "zsh"
-    }
-  }
-{{- else if eq .chezmoi.os "darwin" }}
-  "terminal": {
-    "shell": {
-      "program": "zsh"
-    }
-  }
-{{- end }}
+{{ template "zed/extensions.jsonc" . }}
 }
