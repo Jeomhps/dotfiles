@@ -7,29 +7,10 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 
-{
-  // ============================================================================
-  // Base Settings
-  // ============================================================================
-  {{ template "zed/base.jsonc" . }}
-
-  // ============================================================================
-  // Theme Settings
-  // ============================================================================
-  {{ template "zed/theme.jsonc" . }}
-
-  // ============================================================================
-  // Agent / AI Settings
-  // ============================================================================
-  {{ template "zed/agent.jsonc" . }}
-
-  // ============================================================================
-  // Extensions Settings
-  // ============================================================================
-  {{ template "zed/extensions.jsonc" . }}
-
-  // ============================================================================
-  // Layout Settings
-  // ============================================================================
-  {{ template "zed/layout.jsonc" . }}
-}
+{{- $base := fromYaml (include ".chezmoitemplates/zed/base.yaml") }}
+{{- $theme := fromYaml (include ".chezmoitemplates/zed/theme.yaml") }}
+{{- $agent := fromYaml (include ".chezmoitemplates/zed/agent.yaml") }}
+{{- $extensions := fromYaml (include ".chezmoitemplates/zed/extensions.yaml") }}
+{{- $layout := fromYaml (include ".chezmoitemplates/zed/layout.yaml") }}
+{{- $merged := merge $base $theme $agent $extensions $layout }}
+{{ toPrettyJson $merged }}

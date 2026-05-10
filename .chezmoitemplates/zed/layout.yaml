@@ -1,0 +1,16 @@
+# Layout settings for Zed
+git_panel:
+  button: true
+  dock: "left"
+debugger:
+  button: true
+  dock: "left"
+project_panel:
+  button: true
+  dock: "left"
+outline_panel:
+  button: true
+  dock: "right"
+collaboration_panel:
+  button: false
+  dock: "left"
