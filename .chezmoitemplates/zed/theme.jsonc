@@ -1,9 +1,6 @@
-// Zed theme settings
-{
   "icon_theme": "Catppuccin Mocha",
   "theme": {
     "mode": "system",
     "light": "Ayu Light",
     "dark": "Catppuccin Mocha"
   }
-}

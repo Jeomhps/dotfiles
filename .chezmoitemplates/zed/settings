@@ -1,0 +1,58 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+
+{
+  // ============================================================================
+  // Base Settings
+  // ============================================================================
+{{- template "zed/base.jsonc" . }}
+,
+
+  // ============================================================================
+  // Theme Settings
+  // ============================================================================
+{{- template "zed/theme.jsonc" . }}
+,
+
+  // ============================================================================
+  // Agent / AI Settings
+  // ============================================================================
+{{- template "zed/agent.jsonc" . }}
+,
+
+  // ============================================================================
+  // Extensions Settings
+  // ============================================================================
+{{- template "zed/extensions.jsonc" . }}
+,
+
+  // ============================================================================
+  // OS-Specific Settings
+  // ============================================================================
+{{- if eq .chezmoi.os "windows" }}
+  "terminal": {
+    "shell": {
+      "program": "pwsh",
+      "args": ["-NoLogo"]
+    }
+  }
+{{- else if eq .chezmoi.os "linux" }}
+  "terminal": {
+    "shell": {
+      "program": "zsh"
+    }
+  }
+{{- else if eq .chezmoi.os "darwin" }}
+  "terminal": {
+    "shell": {
+      "program": "zsh"
+    }
+  }
+{{- end }}
+}

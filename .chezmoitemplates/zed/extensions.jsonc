@@ -1,5 +1,3 @@
-// Zed extensions settings
-{
   "auto_install_extensions": {
     "catppuccin": true,
     "catppuccin-icons": true,
@@ -9,4 +7,3 @@
     "toml": true,
     "typst": true
   }
-}
