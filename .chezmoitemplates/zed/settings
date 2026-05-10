@@ -11,20 +11,20 @@
   // ============================================================================
   // Base Settings
   // ============================================================================
-  {{ template "zed/base.jsonc" . }},
+  {{ include ".chezmoitemplates/zed/base.jsonc" | trimAll "\n\t " | trimPrefix "{" | trimSuffix "}" | trimAll "\n\t " }}
 
   // ============================================================================
   // Theme Settings
   // ============================================================================
-  {{ template "zed/theme.jsonc" . }},
+  {{ include ".chezmoitemplates/zed/theme.jsonc" | trimAll "\n\t " | trimPrefix "{" | trimSuffix "}" | trimAll "\n\t " }}
 
   // ============================================================================
   // Agent / AI Settings
   // ============================================================================
-  {{ template "zed/agent.jsonc" . }},
+  {{ include ".chezmoitemplates/zed/agent.jsonc" | trimAll "\n\t " | trimPrefix "{" | trimSuffix "}" | trimAll "\n\t " }}
 
   // ============================================================================
   // Extensions Settings
   // ============================================================================
-  {{ template "zed/extensions.jsonc" . }}
+  {{ include ".chezmoitemplates/zed/extensions.jsonc" | trimAll "\n\t " | trimPrefix "{" | trimSuffix "}" | trimAll "\n\t " }}
 }

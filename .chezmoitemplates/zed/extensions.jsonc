@@ -1,9 +1,11 @@
-  "auto_install_extensions": {
-    "catppuccin": true,
-    "catppuccin-icons": true,
-    "git-firefly": true,
-    "html": true,
-    "log": true,
-    "toml": true,
-    "typst": true
-  }
+{
+    "auto_install_extensions": {
+        "catppuccin": true,
+        "catppuccin-icons": true,
+        "git-firefly": true,
+        "html": true,
+        "log": true,
+        "toml": true,
+        "typst": true,
+    },
+}
