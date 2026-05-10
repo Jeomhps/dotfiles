@@ -1,4 +1,4 @@
-# ---> Docker related 
+# ---> Docker related
 brew "docker"
 brew "colima"
 brew "lazydocker"
@@ -41,6 +41,11 @@ brew "atuin"
 brew "pyright"
 brew "mistral-vibe"
 brew "nmap"
+brew "zoxide"
+brew "eza"
+brew "ripgrep"
+brew "tree-sitter"
+brew "tree-sitter-cli"
 
 # zsh
 brew "zsh-autocomplete"

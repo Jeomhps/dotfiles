@@ -18,7 +18,7 @@
 	{{- if $isWSL }}
 	helper = /mnt/c/Program Files/Git/mingw64/bin/git-credential-manager.exe
     {{- else if $isDarwin }}
-	helper = manager
+	helper = osxkeychain
 	{{- end }}
 	useHttpPath = false # only useful when in multi-user for one host
 
