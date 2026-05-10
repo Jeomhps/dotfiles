@@ -10,7 +10,8 @@
 	pager = less -FRX
 
 [credential]
-	{{- if contains "microsoft" .chezmoi.kernel.osrelease }}
+	{{- $isWSL := and (eq .chezmoi.os "linux") (contains "microsoft" (lower .chezmoi.kernel.osrelease)) -}}
+	{{- if $isWSL }}
 	helper = /mnt/c/Program Files/Git/mingw64/bin/git-credential-manager.exe
 	{{- else }}
 	helper = manager
