@@ -1,15 +1,16 @@
+// Leader key: space
 [
   {
     "context": "Workspace",
     "bindings": {
-      "ctrl-,": ["task::Spawn", {"task_name": "Edit Zed Settings Template"}]
-    }
+      "ctrl-,": ["task::Spawn", { "task_name": "Edit Zed Settings Template" }],
+    },
   },
   {
     "context": "Editor && vim_mode == insert",
     "bindings": {
-      "ctrl-v": "editor::Paste"
-    }
+      "ctrl-v": "editor::Paste",
+    },
   },
   {
     "context": "Editor && vim_mode == normal",
@@ -20,15 +21,16 @@
       "escape": "workspace::CloseActiveDock",
       "space space": "file_finder::Toggle",
       "space c": "editor::ToggleComments",
-      "space .": ["task::Spawn", {"task_name": "Edit Dotfiles"}],
-      "space d a": ["task::Spawn", {"task_name": "Chezmoi Apply"}]
-    }
+      "space .": ["task::Spawn", { "task_name": "Edit Dotfiles" }],
+      "space d a": ["task::Spawn", { "task_name": "Chezmoi Apply" }],
+      "space e": "project_panel::Toggle",
+    },
   },
   {
     "context": "Editor && vim_mode == visual",
     "bindings": {
       "ctrl-c": "editor::Copy",
-      "space c": "editor::ToggleComments"
-    }
-  }
+      "space c": "editor::ToggleComments",
+    },
+  },
 ]
