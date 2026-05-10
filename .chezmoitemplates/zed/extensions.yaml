@@ -7,3 +7,16 @@ auto_install_extensions:
   log: true
   toml: true
   typst: true
+  rust: true
+  python: true
+  typescript: true
+  git: true
+  markdown: true
+  json: true
+  prettier: true
+  eslint: true
+  docker: true
+  regex: true
+  yaml: true
+  nix: true
+  C#: true
