@@ -1,0 +1,14 @@
+// Zed base settings
+{
+  test
+  "colorize_brackets": true,
+  "vim": {
+    "use_system_clipboard": "always"
+  },
+  "vim_mode": true,
+  "ui_font_size": 16,
+  "buffer_font_size": 15,
+  "file_types": {
+    "JSONC": ["*.json.tmpl", "**/zed-settings", "**/zed-keymap", "**/zed-tasks"]
+  }
+}

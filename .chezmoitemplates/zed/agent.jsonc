@@ -1,0 +1,12 @@
+// Zed AI agent settings
+{
+  "agent": {
+    "default_model": {
+      "effort": "high",
+      "enable_thinking": true,
+      "provider": "copilot_chat",
+      "model": "claude-sonnet-4.6"
+    },
+    "model_parameters": []
+  }
+}
