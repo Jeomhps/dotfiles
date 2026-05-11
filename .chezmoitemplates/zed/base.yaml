@@ -16,6 +16,9 @@ status_bar:
 indent_guides:
   enabled: true
   coloring: "fixed"
+telemetry:
+  diagnostics: false
+  metrics: false
 file_types:
   JSONC:
     - "*.json.tmpl"
