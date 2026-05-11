@@ -79,6 +79,9 @@
 
 [includeIf "hasconfig:remote.*.url:https://{{ .work_ado_org }}@dev.azure.com/**"]
 	path = ~/.config/git/config-work
+
+[credential "https://dev.azure.com/"]
+	useHttpPath = true
 {{- end }}
 
 {{- if eq .chezmoi.os "windows" }}
