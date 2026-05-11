@@ -7,6 +7,7 @@ ui_font_size: 16
 buffer_font_size: 15
 tab_size: 2
 buffer_font_family: "CaskaydiaCove Nerd Font Mono"
+line_ending: "enforce_lf"
 file_types:
   JSONC:
     - "*.json.tmpl"
