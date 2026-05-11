@@ -8,6 +8,10 @@ buffer_font_size: 15
 tab_size: 2
 buffer_font_family: "CaskaydiaCove Nerd Font Mono"
 line_ending: "enforce_lf"
+status_bar:
+  active_language_button: true
+  cursor_position_button: true
+  line_endings_button: true
 file_types:
   JSONC:
     - "*.json.tmpl"
