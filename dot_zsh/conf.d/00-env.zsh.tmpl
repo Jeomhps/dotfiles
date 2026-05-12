@@ -6,7 +6,7 @@
 # ── Environment variables & PATH ─────────────────────────────────────────────
 
 {{- if $isDarwin }}
-export HOMEBREW_PREFIX="$(brew --prefix)"
+export HOMEBREW_PREFIX="/opt/homebrew"
 export HOMEBREW_BUNDLE_NO_UPGRADE=1
 export DOCKER_HOST="unix://$HOME/.colima/default/docker.sock"
 
