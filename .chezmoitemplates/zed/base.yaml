@@ -21,7 +21,12 @@ telemetry:
   metrics: false
 file_types:
   JSONC:
+    - "*.jsonc.tmpl"
+  YAML:
+    - "*.yaml.tmpl"
+  ZSH:
+    - "*.zsh.tmpl"
+  JSON:
     - "*.json.tmpl"
-    - "**/zed-settings"
-    - "**/zed-keymap"
-    - "**/zed-tasks"
+  TOML:
+    - "*.toml.tmpl"
