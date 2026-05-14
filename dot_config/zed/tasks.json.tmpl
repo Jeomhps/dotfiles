@@ -1,1 +1,2 @@
-{{- template "zed/tasks.jsonc" . -}}
+{{- $tasks := fromYaml (include ".chezmoitemplates/zed/tasks.yaml") }}
+{{- toPrettyJson $tasks }}

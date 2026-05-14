@@ -1,0 +1,18 @@
+# Tasks for Zed
+- label: "Edit Zed Settings Template"
+  command: "zed"
+  args:
+    - "{{ .chezmoi.sourceDir }}/.chezmoitemplates/zed-settings"
+  reveal: "never"
+- label: "Edit Dotfiles"
+  command: "zed"
+  args:
+    - "{{ .chezmoi.sourceDir }}"
+  reveal: "never"
+- label: "Chezmoi Apply"
+  command: "chezmoi"
+  args:
+    - "apply"
+  reveal: "always"
+  hide: "on_success"
+  use_new_terminal: true
