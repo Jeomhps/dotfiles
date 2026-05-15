@@ -10,3 +10,5 @@ auto_install_extensions:
   prettier: true
   eslint: true
   docker: true
+  nix: true
+  lua: true
