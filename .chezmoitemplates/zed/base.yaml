@@ -1,5 +1,8 @@
 # Base settings for Zed
 colorize_brackets: true
+language_models:
+  bedrock:
+    region: "eu-central-1"
 vim:
   use_system_clipboard: "always"
 vim_mode: true
