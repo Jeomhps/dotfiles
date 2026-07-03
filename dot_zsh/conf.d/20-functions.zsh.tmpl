@@ -94,7 +94,7 @@ o() {
 
   # Dispatch by extension
   case "${target:l}" in
-    *.drawio)
+    *.drawio.*)
       "/mnt/c/Program Files/draw.io/draw.io.exe" "$winpath" &>/dev/null &!
       ;;
     *)
