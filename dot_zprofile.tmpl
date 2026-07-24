@@ -1,0 +1,10 @@
+{{- $p := includeTemplate "platform.json" . | fromJson -}}
+# ── .zprofile ─────────────────────────────────────────────────────────────────
+# Login shells only, sourced after /etc/zprofile.
+{{ if $p.isDarwin }}
+# /etc/zprofile runs `path_helper`, which rebuilds PATH with /etc/paths entries
+# first — pushing /opt/homebrew/bin behind /usr/bin and shadowing brew-installed
+# tools that also exist in the base system. Re-prepend it here to win.
+# `typeset -U path` in .zshenv makes this a reorder, not a duplicate.
+path=("$HOMEBREW_PREFIX/bin" "$HOMEBREW_PREFIX/sbin" $path)
+{{- end }}

@@ -17,6 +17,8 @@ LICENSE
 # Windows only uses Zed — ignore everything else
 {{ if $p.isWindows }}
 .zshrc
+.zshenv
+.zprofile
 .zsh/
 .alacritty.toml
 .config/git
