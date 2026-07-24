@@ -1,11 +1,12 @@
+{{- $p := includeTemplate "platform.json" . | fromJson -}}
 [window]
-{{ if eq .chezmoi.os "darwin" -}}
+{{ if $p.isDarwin -}}
 
 opacity = 0.8
 #Next option is only on macos
 option_as_alt = "OnlyLeft"
 
-{{ else if eq .chezmoi.os "linux" -}}
+{{ else if $p.isLinux -}}
 
 opacity = 0.97
 
@@ -18,7 +19,7 @@ decorations = "None"
 
 [font]
 normal = { family = "CaskaydiaCove Nerd Font Mono", style = "Regular" }
-{{ if eq .chezmoi.os "darwin" -}}
+{{ if $p.isDarwin -}}
 size = 18
 {{ end -}}
 
@@ -29,7 +30,7 @@ style = {shape = "Underline", blinking = "On"}
 hide_when_typing = true
 
 #Change this to os nixos rather than linux since /run/current-sys is only in wsl
-{{ if eq .chezmoi.os "linux" -}}
+{{ if $p.isLinux -}}
 [terminal.shell]
 program = "/run/current-system/sw/bin/zsh"
 

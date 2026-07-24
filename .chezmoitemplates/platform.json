@@ -1,0 +1,21 @@
+{{/*
+  Single source of truth for platform detection.
+
+  Every template that needs to branch on OS pulls it in with one line:
+
+      {{ `{{- $p := includeTemplate "platform.json" . | fromJson -}}` }}
+
+  and then uses $p.isDarwin, $p.isLinux, $p.isWindows, $p.isWSL, $p.isNixOS.
+
+  Kept as a template rather than [data] in .chezmoi.toml.tmpl on purpose:
+  .chezmoi.toml.tmpl is only evaluated by `chezmoi init`, which would
+  overwrite the untracked machine-local config holding the work identity.
+*/ -}}
+{{- $isLinux := eq .chezmoi.os "linux" -}}
+{
+  "isDarwin":  {{ eq .chezmoi.os "darwin" }},
+  "isLinux":   {{ $isLinux }},
+  "isWindows": {{ eq .chezmoi.os "windows" }},
+  "isWSL":     {{ and $isLinux (contains "microsoft" (lower .chezmoi.kernel.osrelease)) }},
+  "isNixOS":   {{ and $isLinux (contains "nixos" (lower .chezmoi.hostname)) }}
+}

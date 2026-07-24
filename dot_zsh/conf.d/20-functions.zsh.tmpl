@@ -1,6 +1,4 @@
-{{- $isDarwin := eq .chezmoi.os "darwin" -}}
-{{- $isLinux := eq .chezmoi.os "linux" -}}
-{{- $isWSL := and $isLinux (contains "microsoft" (lower .chezmoi.kernel.osrelease)) -}}
+{{- $p := includeTemplate "platform.json" . | fromJson -}}
 
 # ── Shell functions ───────────────────────────────────────────────────────────
 
@@ -83,9 +81,9 @@ fix-dotfiles-upstream() {
 o() {
   local target="${1:-.}"
 
-{{- if $isDarwin }}
+{{- if $p.isDarwin }}
   open "$target"
-{{- else if $isWSL }}
+{{- else if $p.isWSL }}
   local winpath
   winpath="$(wslpath -w "$target")"
 

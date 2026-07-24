@@ -1,23 +1,21 @@
 README.md
 LICENSE
 
-{{- $isLinux := eq .chezmoi.os "linux" }}
-{{- $isWSL := and $isLinux (contains "microsoft" (lower .chezmoi.kernel.osrelease)) }}
-{{- $isNixOS := and $isLinux (contains "nixos" (lower .chezmoi.hostname)) }}
+{{- $p := includeTemplate "platform.json" . | fromJson }}
 
 # Zed runs on the Windows host, not inside WSL
-{{ if $isWSL }}
+{{ if $p.isWSL }}
 .config/zed
 {{ end }}
 
 # macOS-only
-{{ if ne .chezmoi.os "darwin" }}
+{{ if not $p.isDarwin }}
 .docker/config.json
 .homebrew/
 {{ end }}
 
 # Windows only uses Zed — ignore everything else
-{{ if eq .chezmoi.os "windows" }}
+{{ if $p.isWindows }}
 .zshrc
 .zsh/
 .alacritty.toml
@@ -33,6 +31,6 @@ LICENSE
 {{ end }}
 
 # Windows-only
-{{ if ne .chezmoi.os "windows" }}
+{{ if not $p.isWindows }}
 AppData/
 {{ end }}

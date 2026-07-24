@@ -1,5 +1,4 @@
-{{- $isDarwin := eq .chezmoi.os "darwin" -}}
-{{- $isLinux := eq .chezmoi.os "linux" -}}
+{{- $p := includeTemplate "platform.json" . | fromJson -}}
 
 # ── Prompt & history tools (must be last) ────────────────────────────────────
 
@@ -7,7 +6,7 @@
 source "$HOME/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh"
 
 # Zsh plugins — on macOS installed via Homebrew, on NixOS enabled system-wide
-{{- if $isDarwin }}
+{{- if $p.isDarwin }}
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 {{- end }}

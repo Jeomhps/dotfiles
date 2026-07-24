@@ -1,11 +1,8 @@
-{{- $isDarwin := eq .chezmoi.os "darwin" -}}
-{{- $isLinux := eq .chezmoi.os "linux" -}}
-{{- $isWSL := and $isLinux (contains "microsoft" (lower .chezmoi.kernel.osrelease)) -}}
-{{- $isNixOS := and $isLinux (contains "nixos" (lower .chezmoi.hostname)) -}}
+{{- $p := includeTemplate "platform.json" . | fromJson -}}
 
 # ── Environment variables & PATH ─────────────────────────────────────────────
 
-{{- if $isDarwin }}
+{{- if $p.isDarwin }}
 export HOMEBREW_PREFIX="/opt/homebrew"
 export HOMEBREW_BUNDLE_NO_UPGRADE=1
 export DOCKER_HOST="unix://$HOME/.colima/default/docker.sock"
@@ -15,16 +12,16 @@ export PATH="$PATH:$(go env GOPATH)/bin"
 export PATH="$PATH:$HOME/.my-scripts/bin"
 
 export EDITOR="nvim"
-{{- else if $isLinux }}
+{{- else if $p.isLinux }}
 export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:$HOME/.cargo/bin"
 export PATH="$PATH:$HOME/.my-scripts/bin"
 
 gopath="$(go env GOPATH 2>/dev/null)" && export PATH="$PATH:$gopath/bin"
 
-{{- if $isWSL }}
+{{- if $p.isWSL }}
 export EDITOR="nvim"
-{{- else if $isNixOS }}
+{{- else if $p.isNixOS }}
 export EDITOR="hx"
 {{- else }}
 export EDITOR="nvim"
@@ -34,7 +31,7 @@ export EDITOR="nvim"
 export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 
-{{- if $isWSL }}
+{{- if $p.isWSL }}
 # No GUI pinentry available in WSL -- GPG_TTY lets pinentry-curses prompt
 # for the passphrase in the current terminal (needed for git commit signing).
 export GPG_TTY="$(tty)"
@@ -45,7 +42,7 @@ gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1
 {{- end }}
 {{- end }}
 
-{{- if and (not $isNixOS) (not (eq .chezmoi.os "windows")) }}
+{{- if and (not $p.isNixOS) (not $p.isWindows) }}
 # Point neovim to the nvim/ subdirectory inside the cloned repo
 export NVIM_APPNAME="neovim-config/nvim"
 {{- end }}

@@ -1,8 +1,6 @@
-{{- $isLinux := eq .chezmoi.os "linux" -}}
-{{- $isNixOS := and $isLinux (contains "nixos" (lower .chezmoi.hostname)) -}}
-{{- $isWindows := eq .chezmoi.os "windows" -}}
+{{- $p := includeTemplate "platform.json" . | fromJson -}}
 
-{{- if and (not $isNixOS) (not $isWindows) }}
+{{- if and (not $p.isNixOS) (not $p.isWindows) }}
 [".config/neovim-config"]
   type = "git-repo"
   url = "https://github.com/jeomhps/neovim"
