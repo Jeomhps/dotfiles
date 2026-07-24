@@ -34,6 +34,12 @@ export EDITOR="nvim"
 export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 
+{{- if $isWSL }}
+# No GUI pinentry available in WSL -- GPG_TTY lets pinentry-curses prompt
+# for the passphrase in the current terminal (needed for git commit signing).
+export GPG_TTY="$(tty)"
+{{- end }}
+
 {{- if and (not $isNixOS) (not (eq .chezmoi.os "windows")) }}
 # Point neovim to the nvim/ subdirectory inside the cloned repo
 export NVIM_APPNAME="neovim-config/nvim"

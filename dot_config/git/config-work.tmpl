@@ -2,4 +2,11 @@
 [user]
 	name  = {{ .work_git_username }}
 	email = {{ .work_git_email }}
+{{- if index . "work_gpg_signing_key" }}
+	signingkey = {{ .work_gpg_signing_key }}
+[commit]
+	gpgsign = true
+[tag]
+	gpgsign = true
+{{- end }}
 {{- end }}
