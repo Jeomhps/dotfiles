@@ -48,7 +48,6 @@ brew "tree-sitter"
 brew "tree-sitter-cli"
 
 # zsh
-brew "zsh-autocomplete"
 brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"
 
