@@ -6,33 +6,61 @@ Personal dotfiles managed by [chezmoi](https://www.chezmoi.io/). Multi-platform:
 
 ```
 .
+├── dot_zshenv.tmpl             # Environment + PATH — sourced by every zsh
+├── dot_zprofile.tmpl           # Login shells; re-prepends Homebrew after path_helper
 ├── dot_zshrc                   # Thin conf.d loader
-├── dot_zsh/conf.d/             # Modular zsh config
-│   ├── 00-env.zsh.tmpl         # PATH, exports, EDITOR, NVIM_APPNAME
+├── dot_zsh/conf.d/             # Modular zsh config (interactive shells only)
+│   ├── 00-env.zsh.tmpl         # Interactive-only env (WSL GPG_TTY)
 │   ├── 10-aliases.zsh.tmpl     # All aliases (general, eza, editor, NixOS, Homebrew, WSL)
 │   ├── 20-functions.zsh.tmpl   # Shell functions
 │   ├── 30-keybinds.zsh         # Keybindings + zsh options
 │   ├── 40-completions.zsh      # compinit + zstyle
 │   └── 90-prompt.zsh.tmpl      # catppuccin → zoxide → starship → atuin (must be last)
+├── dot_alacritty.toml.tmpl
 ├── dot_config/
 │   ├── git/
-│   │   ├── config.tmpl             # Git user config (includeIf blocks)
+│   │   ├── config.tmpl             # Git base config (includeIf blocks)
 │   │   ├── config-personal-github  # Personal GitHub identity
-│   │   └── config-work.tmpl        # Work identity (only deployed when local chezmoi data is present)
+│   │   ├── config-work.tmpl        # Work identity (only deployed when local chezmoi data is present)
+│   │   └── ignore                  # Global excludesfile — OS/editor cruft only
 │   ├── starship.toml
-│   ├── alacritty/
 │   ├── helix/
 │   ├── lazygit/
+│   ├── zellij/
 │   ├── atuin/
 │   ├── eza/
-│   └── zed/
+│   ├── fastfetch/
+│   └── zed/                    # Thin wrappers over .chezmoitemplates/zed/
+├── dot_agents/skills/          # Agent skills (pdf)
+├── dot_my-scripts/scripts/     # Standalone scripts (cm, generate-readme, …)
+├── dot_homebrew/Brewfile       # macOS package manifest
+├── dot_docker/config.json.tmpl # macOS/colima docker config
+├── AppData/Roaming/Zed/        # Windows Zed — same templates as dot_config/zed
+├── .chezmoitemplates/
+│   ├── platform.json           # Shared platform detection (see below)
+│   └── zed/                    # Zed config fragments shared by all platforms
 ├── .chezmoiexternal.toml.tmpl  # External repos (neovim config on non-NixOS)
 └── .chezmoiignore              # Platform-conditional ignores
 ```
 
 ## Platform detection
 
-Templates use `.chezmoi.os`, `.chezmoi.hostname`, and `.chezmoi.kernel.osrelease` (contains `microsoft` on WSL) for platform branching.
+Platform booleans are defined once in `.chezmoitemplates/platform.json` and derived from
+`.chezmoi.os`, `.chezmoi.hostname`, and `.chezmoi.kernel.osrelease` (contains `microsoft` on WSL).
+
+Any template that needs to branch pulls them in with a single line:
+
+```
+{{- $p := includeTemplate "platform.json" . | fromJson -}}
+
+{{ if $p.isWSL }}...{{ end }}
+```
+
+Available: `isDarwin`, `isLinux`, `isWindows`, `isWSL`, `isNixOS`.
+
+Deliberately *not* `[data]` in `.chezmoi.toml.tmpl`: that file is only evaluated by
+`chezmoi init`, which would overwrite the untracked machine-local config holding the
+work identity.
 
 ## Work machine setup
 
@@ -44,11 +72,12 @@ If you are using HTTPS Git operations in WSL, you will need Git installed on the
 
 ```toml
 [data]
-  work_git_username = "yourworkname"
-  work_git_email    = "you@company.com"
-  work_vcs_host     = "git.company.com"
-  work_ado_org      = "mycompany"      # optional — only add if you use Azure DevOps
-  zed_copilot_uri   = "https://your.enterprise.domain"  # Zed Copilot enterprise URI
+  work_git_username   = "yourworkname"
+  work_git_email      = "you@company.com"
+  work_vcs_host       = "git.company.com"
+  work_ado_org        = "mycompany"      # optional — only add if you use Azure DevOps
+  work_gpg_signing_key = "ABCD1234..."   # optional — enables commit/tag signing on work repos
+  zed_copilot_uri     = "https://your.enterprise.domain"  # Zed Copilot enterprise URI
 ```
 
 **Effect of each key:**
@@ -59,14 +88,17 @@ If you are using HTTPS Git operations in WSL, you will need Git installed on the
 | `work_git_email` | yes | Email used in commits on work repos |
 | `work_vcs_host` | yes | Work VCS hostname — activates SSH + HTTPS `includeIf` blocks |
 | `work_ado_org` | no | Azure DevOps org name — activates SSH + HTTPS `includeIf` blocks for `dev.azure.com` |
+| `work_gpg_signing_key` | no | GPG key id — sets `commit.gpgsign`/`tag.gpgsign` on work repos, and on WSL refreshes the gpg-agent tty on shell start |
 | `zed_copilot_uri` | no | Zed Copilot enterprise URI — activates custom Copilot endpoint |
 
 When these keys are present, chezmoi will:
-- Add `[includeIf]` blocks to `~/.gitconfig` that load `~/.gitconfig-work` for any repo whose remote matches `work_vcs_host` (and `dev.azure.com/<work_ado_org>` if set)
-- Deploy `~/.gitconfig-work` with the work `[user]` block
+- Add `[includeIf]` blocks to `~/.config/git/config` that load `~/.config/git/config-work` for any repo whose remote matches `work_vcs_host` (and `dev.azure.com/<work_ado_org>` if set)
+- Deploy `~/.config/git/config-work` with the work `[user]` block
 - Include custom Zed Copilot configuration if `zed_copilot_uri` is defined
 
-`~/.gitconfig-personal` is always deployed and acts as the default identity for any repo not matched by the `includeIf` blocks (e.g. repos with no remote, or other hosts).
+`~/.config/git/config-personal-github` is always deployed and matches GitHub remotes over both SSH and HTTPS.
+
+Note there is **no** global `[user]` fallback: every identity comes from an `includeIf` block keyed on the remote URL. A repo whose remote matches nothing — or that has no remote yet — resolves no `user.email`, and git will refuse to commit until one is set. That is deliberate (it fails loudly instead of silently committing under the wrong identity), but it does mean `git init` in a scratch directory needs `git config user.email` before the first commit.
 
 On machines **without** this local config, none of the above is deployed — no action required.
 
@@ -99,6 +131,6 @@ For example:
 ## Neovim config
 
 - **NixOS/WSL**: baked into the Nix store by the flake — chezmoi does nothing
-- **macOS / plain Linux**: `.chezmoiexternal.toml.tmpl` clones `github:jeomhps/neovim` to `~/.config/neovim-config`; `NVIM_APPNAME=neovim-config/nvim` is set in `00-env.zsh.tmpl`
+- **macOS / plain Linux**: `.chezmoiexternal.toml.tmpl` clones `github:jeomhps/neovim` to `~/.config/neovim-config`; `NVIM_APPNAME=neovim-config/nvim` is set in `dot_zshenv.tmpl`
 
 The clone uses `refreshPeriod = "0s"` — it is cloned once and never auto-pulled. Manage the repo manually.
