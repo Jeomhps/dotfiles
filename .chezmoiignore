@@ -1,6 +1,5 @@
 README.md
 LICENSE
-**/lazyvim.json
 
 {{- $isLinux := eq .chezmoi.os "linux" }}
 {{- $isWSL := and $isLinux (contains "microsoft" (lower .chezmoi.kernel.osrelease)) }}
@@ -22,16 +21,15 @@ LICENSE
 .zshrc
 .zsh/
 .alacritty.toml
-.gitconfig
+.config/git
 .config/starship.toml
+.config/fastfetch
 .config/helix
 .config/lazygit
 .config/zellij
 .config/eza
 .config/atuin
 .my-scripts/
-.docker/
-.homebrew/
 {{ end }}
 
 # Windows-only
