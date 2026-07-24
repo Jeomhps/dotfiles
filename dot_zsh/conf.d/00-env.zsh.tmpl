@@ -38,6 +38,11 @@ export LC_ALL="en_US.UTF-8"
 # No GUI pinentry available in WSL -- GPG_TTY lets pinentry-curses prompt
 # for the passphrase in the current terminal (needed for git commit signing).
 export GPG_TTY="$(tty)"
+{{- if index . "work_gpg_signing_key" }}
+# gpg-agent otherwise stays pinned to whatever tty it first saw, so signing
+# silently fails ("Operation cancelled") in any other/new terminal.
+gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1
+{{- end }}
 {{- end }}
 
 {{- if and (not $isNixOS) (not (eq .chezmoi.os "windows")) }}
