@@ -6,6 +6,9 @@
 #
 # Anything that runs a command, writes output, or touches the terminal must NOT
 # go here — it would run for every script too. That belongs in ~/.zsh/conf.d/.
+#
+# This file replaces the one rustup writes (which only sources ~/.cargo/env to
+# prepend ~/.cargo/bin); that path is folded into the PATH lists below.
 
 # Dedupe PATH, so re-sourcing reorders instead of appending another copy.
 # -x is explicit: if zsh started with no PATH in the environment at all
@@ -23,7 +26,7 @@ export HOMEBREW_BUNDLE_NO_UPGRADE=1
 export DOCKER_HOST="unix://$HOME/.colima/default/docker.sock"
 
 path=("$HOMEBREW_PREFIX/bin" "$HOMEBREW_PREFIX/sbin" $path)
-path+=("$HOME/go/bin" "$HOME/.my-scripts/bin")
+path+=("$HOME/.cargo/bin" "$HOME/go/bin" "$HOME/.my-scripts/bin")
 
 export EDITOR="nvim"
 {{- else if $p.isLinux }}
