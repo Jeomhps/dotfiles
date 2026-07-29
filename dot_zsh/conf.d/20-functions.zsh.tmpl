@@ -25,6 +25,30 @@ gp() {
   gopass show -o "$1"
 }
 
+# Sign a file (detached, armored signature)
+gsig() {
+  [[ -z "$1" ]] && { echo "usage: gsig <file>"; return 1 }
+  gpg --detach-sign --armor "$1"
+}
+
+# Verify a detached signature (expects <file>.asc alongside <file>)
+gver() {
+  [[ -z "$1" ]] && { echo "usage: gver <file>"; return 1 }
+  gpg --verify "$1.asc" "$1"
+}
+
+# Encrypt a file to yourself
+genc() {
+  [[ -z "$1" ]] && { echo "usage: genc <file>"; return 1 }
+  gpg --encrypt --armor --default-recipient-self "$1"
+}
+
+# Decrypt a file (strips the extension for the output name)
+gdec() {
+  [[ -z "$1" ]] && { echo "usage: gdec <file>"; return 1 }
+  gpg --output "${1%.*}" --decrypt "$1"
+}
+
 # Create a directory and cd into it
 mkcd() {
   mkdir -p "$1" && cd "$1"
@@ -104,3 +128,17 @@ o() {
   xdg-open "$target" &
 {{- end }}
 }
+
+{{- if and $p.isWSL (index . "work_vcs_host") }}
+
+# lazygit's TUI breaks if pinentry-curses pops up mid-session for an ssh
+# signature, so warm the key up first -- only once per shell
+unalias g 2>/dev/null
+g() {
+  if [[ -z "$__ssh_warmed" ]]; then
+    ssh -T git@{{ .work_vcs_host }}
+    export __ssh_warmed=1
+  fi
+  lazygit
+}
+{{- end }}

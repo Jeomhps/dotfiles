@@ -9,8 +9,8 @@
 # for the passphrase in the current terminal (needed for git commit signing).
 export GPG_TTY="$(tty)"
 {{- if index . "work_gpg_signing_key" }}
-# gpg-agent otherwise stays pinned to whatever tty it first saw, so signing
-# silently fails ("Operation cancelled") in any other/new terminal.
+# gpg-agent forgets this tty after a rebuild, so signing breaks until a new
+# shell is opened -- see 10-aliases.zsh.tmpl for the update/upgrade fix.
 gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1
 {{- end }}
 {{- end }}
