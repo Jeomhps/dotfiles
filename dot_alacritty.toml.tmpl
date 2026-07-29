@@ -3,7 +3,6 @@
 {{ if $p.isDarwin -}}
 
 opacity = 0.8
-#Next option is only on macos
 option_as_alt = "OnlyLeft"
 
 {{ else if $p.isLinux -}}
@@ -29,8 +28,7 @@ style = {shape = "Underline", blinking = "On"}
 [mouse]
 hide_when_typing = true
 
-#Change this to os nixos rather than linux since /run/current-sys is only in wsl
-{{ if $p.isLinux -}}
+{{ if $p.isNixOS -}}
 [terminal.shell]
 program = "/run/current-system/sw/bin/zsh"
 
