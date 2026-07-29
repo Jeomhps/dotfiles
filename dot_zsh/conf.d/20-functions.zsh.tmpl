@@ -49,6 +49,15 @@ gdec() {
   gpg --output "${1%.*}" --decrypt "$1"
 }
 
+# Clearsign a short message (stdin or file), prints signed block to stdout
+gclearsign() {
+  if [[ -n "$1" ]]; then
+    gpg --clearsign --armor --output - "$1"
+  else
+    gpg --clearsign --armor --output -
+  fi
+}
+
 # Create a directory and cd into it
 mkcd() {
   mkdir -p "$1" && cd "$1"
