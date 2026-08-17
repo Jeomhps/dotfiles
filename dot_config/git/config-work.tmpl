@@ -2,8 +2,18 @@
 [user]
 	name  = {{ .work_git_username }}
 	email = {{ .work_git_email }}
-{{- if index . "work_gpg_signing_key" }}
+{{- if eq (index . "work_signing_method") "gpg" }}
 	signingkey = {{ .work_gpg_signing_key }}
+[commit]
+	gpgsign = true
+[tag]
+	gpgsign = true
+{{- else if eq (index . "work_signing_method") "ssh" }}
+	signingkey = {{ .work_ssh_signing_key }}
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	allowedSignersFile = ~/.ssh/allowed_signers
 [commit]
 	gpgsign = true
 [tag]

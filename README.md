@@ -76,7 +76,9 @@ If you are using HTTPS Git operations in WSL, you will need Git installed on the
   work_git_email      = "you@company.com"
   work_vcs_host       = "git.company.com"
   work_ado_org        = "mycompany"      # optional — only add if you use Azure DevOps
-  work_gpg_signing_key = "ABCD1234..."   # optional — enables commit/tag signing on work repos
+  work_signing_method = "gpg"            # optional — "gpg" or "ssh", toggles which format signs work commits
+  work_gpg_signing_key = "ABCD1234..."   # required when work_signing_method = "gpg"
+  work_ssh_signing_key = "~/.ssh/id_ed25519.pub"  # required when work_signing_method = "ssh"
   zed_copilot_uri     = "https://your.enterprise.domain"  # Zed Copilot enterprise URI
 ```
 
@@ -88,8 +90,12 @@ If you are using HTTPS Git operations in WSL, you will need Git installed on the
 | `work_git_email` | yes | Email used in commits on work repos |
 | `work_vcs_host` | yes | Work VCS hostname — activates SSH + HTTPS `includeIf` blocks |
 | `work_ado_org` | no | Azure DevOps org name — activates SSH + HTTPS `includeIf` blocks for `dev.azure.com` |
-| `work_gpg_signing_key` | no | GPG key id — sets `commit.gpgsign`/`tag.gpgsign` on work repos, and on WSL refreshes the gpg-agent tty on shell start |
+| `work_signing_method` | no | `"gpg"` or `"ssh"` — enables `commit.gpgsign`/`tag.gpgsign` on work repos with the chosen format. Omit to disable signing entirely |
+| `work_gpg_signing_key` | when method is `gpg` | GPG key id used as `user.signingkey` |
+| `work_ssh_signing_key` | when method is `ssh` | Path to an SSH public key used as `user.signingkey`, with `gpg.format = ssh` and `gpg.ssh.allowedSignersFile = ~/.ssh/allowed_signers` |
 | `zed_copilot_uri` | no | Zed Copilot enterprise URI — activates custom Copilot endpoint |
+
+Note: switching `work_signing_method` to `ssh` requires `~/.ssh/allowed_signers` to exist (containing `<email> <public key>` lines) for local `git log --show-signature` verification to work — GitHub's own "Verified" badge doesn't need this file.
 
 When these keys are present, chezmoi will:
 - Add `[includeIf]` blocks to `~/.config/git/config` that load `~/.config/git/config-work` for any repo whose remote matches `work_vcs_host` (and `dev.azure.com/<work_ado_org>` if set)
