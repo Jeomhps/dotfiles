@@ -34,9 +34,10 @@ alias v='nvim'
 
 # NixOS
 {{- if $p.isNixOS }}
-{{- if $p.isWSL }}
-# rebuild switch restarts gpg-agent, which forgets the tty --
-# refresh the tty
+{{- if and $p.isWSL (index . "gpg_enabled") }}
+# rebuild switch restarts gpg-agent, which forgets the tty -- refresh it so
+# gpg prompts (gopass unlocks, gpg-based commit signing) don't break until a
+# new shell is opened
 alias update='sudo nixos-rebuild switch --flake .# && gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1'
 alias upgrade='nix flake update && sudo nixos-rebuild switch --flake .# && gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1'
 alias rollback='sudo nixos-rebuild switch --flake .# --rollback && gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1'

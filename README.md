@@ -72,6 +72,7 @@ If you are using HTTPS Git operations in WSL, you will need Git installed on the
 
 ```toml
 [data]
+  gpg_enabled         = true             # optional — gopass/GPG is set up on this machine; drives WSL tty refresh
   work_git_username   = "yourworkname"
   work_git_email      = "you@company.com"
   work_vcs_host       = "git.company.com"
@@ -86,6 +87,7 @@ If you are using HTTPS Git operations in WSL, you will need Git installed on the
 
 | Key | Required | Effect |
 |---|---|---|
+| `gpg_enabled` | no | On WSL, exports `GPG_TTY` and refreshes the gpg-agent tty on shell start and after `update`/`upgrade`/`rollback` (needed whenever gpg-agent may prompt: gopass unlocks, and gpg-based commit signing). Omit/false if this machine doesn't use gopass or GPG at all |
 | `work_git_username` | yes | Name used in commits on work repos |
 | `work_git_email` | yes | Email used in commits on work repos |
 | `work_vcs_host` | yes | Work VCS hostname — activates SSH + HTTPS `includeIf` blocks |

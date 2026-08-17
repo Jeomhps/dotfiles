@@ -4,13 +4,13 @@
 # PATH and the plain exports live in ~/.zshenv so non-interactive shells get
 # them too. Only things that need a terminal belong here.
 
-{{- if $p.isWSL }}
-# No GUI pinentry available in WSL -- GPG_TTY lets pinentry-curses prompt
-# for the passphrase in the current terminal (needed for git commit signing).
+{{- if and $p.isWSL (index . "gpg_enabled") }}
+# No GUI pinentry available in WSL -- GPG_TTY lets pinentry-curses prompt in
+# the current terminal whenever gpg-agent needs it (gopass unlocks, and git
+# commit signing when work_signing_method = "gpg").
 export GPG_TTY="$(tty)"
-{{- if index . "work_gpg_signing_key" }}
-# gpg-agent forgets this tty after a rebuild, so signing breaks until a new
-# shell is opened -- see 10-aliases.zsh.tmpl for the update/upgrade fix.
+# gpg-agent forgets this tty after a rebuild, so any gpg prompt (gopass
+# unlocks, gpg-based commit signing) breaks until a new shell is opened --
+# see 10-aliases.zsh.tmpl for the update/upgrade fix.
 gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1
-{{- end }}
 {{- end }}
