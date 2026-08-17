@@ -35,11 +35,11 @@ alias v='nvim'
 # NixOS
 {{- if $p.isNixOS }}
 {{- if $p.isWSL }}
-# rebuild switch restarts gpg-agent, which forgets the tty and the cache --
-# refresh the tty and let `g` know it needs to warm the ssh key up again
-alias update='sudo nixos-rebuild switch --flake .# && gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1; unset __ssh_warmed'
-alias upgrade='nix flake update && sudo nixos-rebuild switch --flake .# && gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1; unset __ssh_warmed'
-alias rollback='sudo nixos-rebuild switch --flake .# --rollback && gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1; unset __ssh_warmed'
+# rebuild switch restarts gpg-agent, which forgets the tty --
+# refresh the tty
+alias update='sudo nixos-rebuild switch --flake .# && gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1'
+alias upgrade='nix flake update && sudo nixos-rebuild switch --flake .# && gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1'
+alias rollback='sudo nixos-rebuild switch --flake .# --rollback && gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1'
 {{- else }}
 alias update='sudo nixos-rebuild switch --flake .#'
 alias upgrade='nix flake update && sudo nixos-rebuild switch --flake .#'

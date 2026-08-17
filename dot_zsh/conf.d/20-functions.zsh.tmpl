@@ -138,16 +138,4 @@ o() {
 {{- end }}
 }
 
-{{- if and $p.isWSL (index . "work_vcs_host") }}
 
-# lazygit's TUI breaks if pinentry-curses pops up mid-session for an ssh
-# signature, so warm the key up first -- only once per shell
-unalias g 2>/dev/null
-g() {
-  if [[ -z "$__ssh_warmed" ]]; then
-    ssh -T git@{{ .work_vcs_host }}
-    export __ssh_warmed=1
-  fi
-  lazygit
-}
-{{- end }}
