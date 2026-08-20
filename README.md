@@ -104,7 +104,7 @@ When these keys are present, chezmoi will:
 - Deploy `~/.config/git/config-work` with the work `[user]` block
 - Include custom Zed Copilot configuration if `zed_copilot_uri` is defined
 
-`~/.config/git/config-personal-github` is always deployed and matches GitHub remotes over both SSH and HTTPS.
+`~/.config/git/config-personal-github` is always deployed and matches GitHub remotes over both SSH and HTTPS. It signs commits/tags with an SSH resident key dedicated to signing (`~/.ssh/id_ed25519_sk_rk_github_signing`, separate from the auth key used for `git@github.com` transport) — `git log --show-signature` needs `~/.ssh/allowed_signers` populated with `<email> <ssh-public-key>` for local verification; GitHub's own "Verified" badge only needs the public key uploaded under the account's Signing Key settings.
 
 Note there is **no** global `[user]` fallback: every identity comes from an `includeIf` block keyed on the remote URL. A repo whose remote matches nothing — or that has no remote yet — resolves no `user.email`, and git will refuse to commit until one is set. That is deliberate (it fails loudly instead of silently committing under the wrong identity), but it does mean `git init` in a scratch directory needs `git config user.email` before the first commit.
 
