@@ -81,6 +81,7 @@ If you are using HTTPS Git operations in WSL, you will need Git installed on the
   work_gpg_signing_key = "ABCD1234..."   # required when work_signing_method = "gpg"
   work_ssh_signing_key = "~/.ssh/id_ed25519.pub"  # required when work_signing_method = "ssh"
   zed_copilot_uri     = "https://your.enterprise.domain"  # Zed Copilot enterprise URI
+  no_yubikey          = true             # optional — this machine never has the YubiKey; personal GitHub commits go unsigned
 ```
 
 **Effect of each key:**
@@ -96,6 +97,7 @@ If you are using HTTPS Git operations in WSL, you will need Git installed on the
 | `work_gpg_signing_key` | when method is `gpg` | GPG key id used as `user.signingkey` |
 | `work_ssh_signing_key` | when method is `ssh` | Path to an SSH public key used as `user.signingkey`, with `gpg.format = ssh` and `gpg.ssh.allowedSignersFile = ~/.ssh/allowed_signers` |
 | `zed_copilot_uri` | no | Zed Copilot enterprise URI — activates custom Copilot endpoint |
+| `no_yubikey` | no | Set on machines that never have the YubiKey plugged in (e.g. a work laptop where it can't be brought in). Drops `signingkey`/`gpg`/`commit.gpgsign`/`tag.gpgsign` from `config-personal-github`, so personal GitHub commits from this machine are made unsigned instead of failing when the hardware key is absent |
 
 Note: switching `work_signing_method` to `ssh` requires `~/.ssh/allowed_signers` to exist (containing `<email> <public key>` lines) for local `git log --show-signature` verification to work — GitHub's own "Verified" badge doesn't need this file.
 
