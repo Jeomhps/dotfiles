@@ -6,6 +6,15 @@
 [includeIf "hasconfig:remote.*.url:https://github.com/**"]
 	path = ~/.config/git/config-personal-github
 
+[includeIf "hasconfig:remote.*.url:git@codeberg.org:*/**"]
+	path = ~/.config/git/config-personal-codeberg
+
+[includeIf "hasconfig:remote.*.url:https://codeberg.org/**"]
+	path = ~/.config/git/config-personal-codeberg
+
+[includeIf "hasconfig:remote.*.url:ssh://git@codeberg.org/**"]
+	path = ~/.config/git/config-personal-codeberg
+
 [core]
 	editor = nvim
 	excludesfile = ~/.config/git/ignore
