@@ -1,0 +1,71 @@
+{{- $p := includeTemplate "platform.json" . | fromJson -}}
+{{- if and $p.isLinux (not $p.isNixOS) (not $p.isWSL) -}}
+#!/bin/sh
+# ── Debian/Ubuntu bootstrap ───────────────────────────────────────────────────
+# Installs everything these dotfiles expect. run_onchange_: chezmoi runs it on
+# the first apply, then again only when this file changes. Safe to re-run.
+set -eu
+
+if ! command -v apt-get >/dev/null 2>&1; then
+  echo "install-packages: no apt-get, skipping (not Debian/Ubuntu)" >&2
+  exit 0
+fi
+
+BIN="$HOME/.local/bin"
+mkdir -p "$BIN"
+
+case "$(uname -m)" in
+  x86_64)        NVIM_ARCH=x86_64; ZELLIJ_ARCH=x86_64 ;;
+  aarch64|arm64) NVIM_ARCH=arm64;  ZELLIJ_ARCH=aarch64 ;;
+  *) echo "install-packages: unsupported arch $(uname -m)" >&2; exit 1 ;;
+esac
+
+# ── apt packages ──────────────────────────────────────────────────────────────
+sudo apt-get update
+sudo apt-get install -y \
+  zsh git curl xz-utils fontconfig xclip \
+  starship zoxide atuin eza bat duf lazygit fastfetch hx alacritty
+
+# Debian ships bat as batcat
+if [ -x /usr/bin/batcat ]; then
+  ln -sf /usr/bin/batcat "$BIN/bat"
+fi
+
+# ── Neovim >= 0.12 (the config uses vim.pack; apt is too old) ────────────────
+# Installed under /opt with a link in /usr/local/bin, which comes before
+# /usr/bin in PATH, so it also wins over an apt-installed neovim.
+nvim_ok() {
+  v=$(/usr/local/bin/nvim --version 2>/dev/null \
+        | sed -n '1s/^NVIM v\([0-9]*\)\.\([0-9]*\).*/\1 \2/p')
+  [ -n "$v" ] || return 1
+  set -- $v
+  [ "$1" -gt 0 ] || [ "$2" -ge 12 ]
+}
+if ! nvim_ok; then
+  curl -fsSL "https://github.com/neovim/neovim/releases/latest/download/nvim-linux-$NVIM_ARCH.tar.gz" \
+    | sudo tar -xz -C /opt
+  sudo ln -sf "/opt/nvim-linux-$NVIM_ARCH/bin/nvim" /usr/local/bin/nvim
+fi
+
+# ── Zellij (not packaged in Debian) ──────────────────────────────────────────
+if ! command -v zellij >/dev/null 2>&1 && [ ! -x "$BIN/zellij" ]; then
+  curl -fsSL "https://github.com/zellij-org/zellij/releases/latest/download/zellij-$ZELLIJ_ARCH-unknown-linux-musl.tar.gz" \
+    | tar -xz -C "$BIN" zellij
+fi
+
+# ── Nerd Font used by Alacritty and Zed ──────────────────────────────────────
+if ! fc-list | grep -q "CaskaydiaCove Nerd Font Mono"; then
+  FONT_DIR="$HOME/.local/share/fonts/CaskaydiaCove"
+  mkdir -p "$FONT_DIR"
+  curl -fsSL https://github.com/ryanoasis/nerd-fonts/releases/latest/download/CascadiaCode.tar.xz \
+    | tar -xJ -C "$FONT_DIR"
+  fc-cache -f "$FONT_DIR"
+fi
+
+# ── zsh as login shell ────────────────────────────────────────────────────────
+ZSH_PATH=$(command -v zsh)
+if [ "$(getent passwd "$(id -un)" | cut -d: -f7)" != "$ZSH_PATH" ]; then
+  echo "install-packages: setting zsh as login shell (asks for your password)"
+  chsh -s "$ZSH_PATH"
+fi
+{{- end }}

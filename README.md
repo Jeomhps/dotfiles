@@ -62,6 +62,33 @@ Deliberately *not* `[data]` in `.chezmoi.toml.tmpl`: that file is only evaluated
 `chezmoi init`, which would overwrite the untracked machine-local config holding the
 work identity.
 
+## Debian/Ubuntu setup
+
+`run_onchange_before_install-packages-debian.sh.tmpl` installs everything the configs
+expect on plain Debian/Ubuntu (skipped on NixOS, WSL, macOS and Windows): the apt
+packages, Neovim ≥ 0.12 (the apt one is too old for `vim.pack`), Zellij, the
+CaskaydiaCove Nerd Font, and zsh as login shell. It needs `git` and a working `sudo`:
+
+```sh
+sudo apt install -y git
+sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin init --apply Jeomhps
+```
+
+It runs on the first apply, then again only when the script changes.
+
+## SSH keys (YubiKey)
+
+SSH keys are FIDO2 resident keys on the YubiKey, so only their stub files live on a
+machine, and they are never in this repo. On a new machine, fetch them once (PIN + touch):
+
+```sh
+cd ~/.ssh && ssh-keygen -K
+```
+
+This writes `id_ed25519_sk_rk_<application>` for each key (`github`, `signing`,
+`vps-jeomhps`). `~/.ssh/config` (from `private_dot_ssh/private_config`) points
+`github.com` at `id_ed25519_sk_rk_github`, since the suffixed names are not tried by default.
+
 ## Work machine setup
 
 On a work machine, create `~/.config/chezmoi/chezmoi.toml` **before** running `chezmoi apply` (or `chezmoi init --apply`). This file is never tracked — it is chezmoi's own local config and stays private on the machine.

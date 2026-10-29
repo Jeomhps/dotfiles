@@ -1,0 +1,11 @@
+# ── ~/.ssh/config ─────────────────────────────────────────────────────────────
+# Keys live on the YubiKey as FIDO2 resident keys. Their stub files are not in
+# this repo: on a new machine, fetch them once with
+#   cd ~/.ssh && ssh-keygen -K
+# which writes id_ed25519_sk_rk_<application> (+ .pub) for each key.
+# The suffixed names are not tried by default, hence the explicit IdentityFile.
+
+Host github.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519_sk_rk_github
+    IdentitiesOnly yes
