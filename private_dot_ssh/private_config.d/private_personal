@@ -1,7 +1,7 @@
 # Keys: `ssh-keygen -K` with the YubiKey. No ControlMaster: one touch per connection.
 
-Host github.com
-  IdentityFile ~/.ssh/id_ed25519_sk_rk_github
+Host github.com codeberg.org
+  IdentityFile ~/.ssh/id_ed25519_sk_rk_git
   IdentityAgent none
   IdentitiesOnly yes
 
@@ -9,7 +9,7 @@ Host github.com
 Host git.jeomhps.com
   Port 2223
   User git
-  IdentityFile ~/.ssh/id_ed25519_sk_rk_vps-jeomhps
+  IdentityFile ~/.ssh/id_ed25519_sk_rk_git
   IdentityAgent none
   IdentitiesOnly yes
 
@@ -17,6 +17,6 @@ Host vps
   HostName vps.jeomhps.com
   Port 2222
   User admin
-  IdentityFile ~/.ssh/id_ed25519_sk_rk_vps-jeomhps
+  IdentityFile ~/.ssh/id_ed25519_sk_rk_vps
   IdentityAgent none
   IdentitiesOnly yes
