@@ -8,6 +8,8 @@ brew "docker-compose"
 brew "docker-buildx"
 
 brew "age"
+brew "openssh"
+brew "ykman"
 brew "openvpn"
 brew "openssl@3"
 brew "bat"
