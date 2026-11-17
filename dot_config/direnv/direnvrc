@@ -1,0 +1,4 @@
+# nix-direnv : `use flake` avec cache + gc root (pas besoin de l'installer, direnv le télécharge et vérifie le hash)
+if ! has nix_direnv_version || ! nix_direnv_version 3.2.0; then
+  source_url "https://raw.githubusercontent.com/nix-community/nix-direnv/3.2.0/direnvrc" "sha256-hW6NC1JHue3IjZN3uDM6l6I2PMaauqd2D7hXYJ1Zfr4="
+fi
