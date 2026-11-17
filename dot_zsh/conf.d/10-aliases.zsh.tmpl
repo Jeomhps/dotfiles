@@ -12,16 +12,10 @@ alias cat='bat -p'
 alias df='duf'
 alias g='lazygit'
 
-# ls / eza
-{{- if $p.isDarwin }}
-alias ls='eza --color=always --group-directories-first --icons=auto'
-alias ll='eza -l --color=always --group-directories-first --icons=auto'
-alias la='eza -la --color=always --group-directories-first --icons=auto'
-{{- else if $p.isLinux }}
-alias ls='eza --color=always --group-directories-first --icons=always'
-alias ll='eza -l --color=always --group-directories-first --icons=always'
-alias la='eza -la --color=always --group-directories-first --icons=always'
-{{- end }}
+# ls / eza (auto: no colors/icons when piped or redirected)
+alias ls='eza --color=auto --group-directories-first --icons=auto'
+alias ll='eza -l --color=auto --group-directories-first --icons=auto'
+alias la='eza -la --color=auto --group-directories-first --icons=auto'
 
 # Editor
 {{- if or $p.isDarwin $p.isWSL }}
