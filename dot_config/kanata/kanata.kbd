@@ -1,0 +1,28 @@
+(defcfg
+  process-unmapped-keys yes
+)
+
+(defsrc
+  caps lsft fn
+  f1 f2 f3 f4 f5 f6 f7 f8 f9 f10 f11 f12
+  left right up down bspc e f
+)
+
+(defalias
+  ;; Shift as usual; a second tap within 300 ms toggles Caps Lock
+  sft (tap-dance-eager 300 (lsft caps))
+  ;; Through the virtual keyboard macOS no longer applies the Apple top row or fn combos
+  fnl (layer-while-held fkeys)
+)
+
+(deflayer base
+  lctl @sft @fnl
+  brdn brup mctl M-spc Dictation dnd prev pp next mute vold volu
+  left right up down bspc e f
+)
+
+(deflayer fkeys
+  lctl lsft _
+  f1 f2 f3 f4 f5 f6 f7 f8 f9 f10 f11 f12
+  home end pgup pgdn del C-M-spc C-M-f
+)
