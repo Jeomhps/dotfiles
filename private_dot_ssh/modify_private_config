@@ -2,7 +2,9 @@
 # ~/.ssh/config stays unmanaged; only ensure the Include, which must precede any Host
 line='Include ~/.ssh/config.d/*'
 input=$(cat)
-if printf '%s\n' "$input" | grep -qxF "$line"; then
+if [ -z "$input" ]; then
+  printf '%s\n' "$line"
+elif printf '%s\n' "$input" | grep -qxF "$line"; then
   printf '%s\n' "$input"
 else
   printf '%s\n\n%s\n' "$line" "$input"
