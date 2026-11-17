@@ -20,7 +20,7 @@ LICENSE
 .zshenv
 .zprofile
 .zsh/
-.alacritty.toml
+.config/alacritty
 .config/git
 .config/starship.toml
 .config/fastfetch
