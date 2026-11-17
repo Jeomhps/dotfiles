@@ -1,0 +1,19 @@
+[user]
+	name  = jeomhps
+	# Same as Codeberg: repos here get push-mirrored there, and the commits must not change.
+	email = jeomhps@noreply.codeberg.org
+{{- if not (index . "no_yubikey") }}
+	signingkey = ~/.ssh/id_ed25519_sk_rk_signing.pub
+
+[gpg]
+	format = ssh
+
+[gpg "ssh"]
+	allowedSignersFile = ~/.ssh/allowed_signers
+
+[commit]
+	gpgsign = true
+
+[tag]
+	gpgsign = true
+{{- end }}
