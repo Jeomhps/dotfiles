@@ -1,24 +1,15 @@
-# Global Git ignore — OS and editor cruft only.
-#
-# Deliberately minimal. Anything project-specific (build output, deps,
-# artifacts) belongs in that project's own .gitignore: patterns here apply to
-# every repo on the machine and silently skip files with no explanation, which
-# is very hard to debug when it hits something you meant to commit.
+# OS/editor cruft only: anything here silently applies to every repo
 
-# macOS
 .DS_Store
 ._*
 
-# Windows
 Thumbs.db
 ehthumbs.db
 Desktop.ini
 $RECYCLE.BIN/
 
-# Linux
 *~
 
-# Editors
 *.swp
 *.swo
 .idea/

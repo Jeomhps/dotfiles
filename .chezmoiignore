@@ -8,7 +8,6 @@ LICENSE
 .config/zed
 {{ end }}
 
-# macOS-only
 {{ if not $p.isDarwin }}
 .docker/config.json
 .homebrew/
@@ -33,13 +32,11 @@ LICENSE
 .my-scripts/
 {{ end }}
 
-# Windows-only
 {{ if not $p.isWindows }}
 AppData/
 {{ end }}
 
-# Personal ssh hosts (YubiKey sk keys) would shadow a work machine's own github.com entry.
-# Skipped where work data is set, unless personal_ssh = true.
+# Would shadow a work machine's own github.com entry
 {{ if and (index . "work_vcs_host") (not (index . "personal_ssh")) }}
 .ssh/config.d/personal
 {{ end }}

@@ -1,4 +1,3 @@
-# Layout settings for Zed
 git_panel:
   button: true
   dock: "left"

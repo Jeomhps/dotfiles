@@ -1,7 +1,3 @@
-# ── .zshrc ────────────────────────────────────────────────────────────────────
-# Loads conf.d files in order. Add new features by dropping a file in
-# ~/.zsh/conf.d/ — numeric prefix controls load order.
-
 for __zsh_conf in "$HOME/.zsh/conf.d/"*.zsh(N); do
   source "$__zsh_conf"
 done

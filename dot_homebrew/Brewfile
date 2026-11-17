@@ -1,9 +1,8 @@
-# ---> Docker related
 brew "docker"
 brew "colima"
 brew "lazydocker"
 
-# To make both plugin work add "cliPluginsExtraDirs" to ~/.docker/config.json
+# Needs cliPluginsExtraDirs in ~/.docker/config.json
 brew "docker-compose"
 brew "docker-buildx"
 
@@ -50,11 +49,8 @@ brew "ripgrep"
 brew "tree-sitter"
 brew "tree-sitter-cli"
 
-# zsh
 brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"
-
-# --------------- cask ---------------
 
 cask "alacritty"
 cask "karabiner-elements"

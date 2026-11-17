@@ -1,18 +1,13 @@
 {{- $p := includeTemplate "platform.json" . | fromJson -}}
 
-# ── Shell functions ───────────────────────────────────────────────────────────
-
-# Show what's listening on which port
 ports() {
   ss -tlnp
 }
 
-# Quick backup of a file before editing
 backup() {
   cp "$1" "$1.bak" && echo "backed up → $1.bak"
 }
 
-# Docker cleanup — prune stopped containers, dangling images, unused volumes
 docker-clean() {
   docker container prune -f
   docker image prune -f
@@ -20,36 +15,30 @@ docker-clean() {
   echo "docker cleaned up"
 }
 
-# Quick gopass secret retrieval
 gp() {
   gopass show -o "$1"
 }
 
-# Sign a file (detached, armored signature)
 gsig() {
   [[ -z "$1" ]] && { echo "usage: gsig <file>"; return 1 }
   gpg --detach-sign --armor "$1"
 }
 
-# Verify a detached signature (expects <file>.asc alongside <file>)
 gver() {
   [[ -z "$1" ]] && { echo "usage: gver <file>"; return 1 }
   gpg --verify "$1.asc" "$1"
 }
 
-# Encrypt a file to yourself
 genc() {
   [[ -z "$1" ]] && { echo "usage: genc <file>"; return 1 }
   gpg --encrypt --armor --default-recipient-self "$1"
 }
 
-# Decrypt a file (strips the extension for the output name)
 gdec() {
   [[ -z "$1" ]] && { echo "usage: gdec <file>"; return 1 }
   gpg --output "${1%.*}" --decrypt "$1"
 }
 
-# Clearsign a short message (stdin or file), prints signed block to stdout
 gclearsign() {
   if [[ -n "$1" ]]; then
     gpg --clearsign --armor --output - "$1"
@@ -58,7 +47,6 @@ gclearsign() {
   fi
 }
 
-# Create a directory and cd into it
 mkcd() {
   mkdir -p "$1" && cd "$1"
 }
@@ -73,13 +61,11 @@ up() {
   cd "$d" || return 1
 }
 
-# Quick find by name in current tree (fd is faster than find)
 f() {
   fd --hidden "$1"
 }
 
-# Fix chezmoi and neovim config remotes to use SSH instead of HTTPS
-# Safe to run multiple times — skips repos already on SSH
+# Switch chezmoi and neovim config remotes from HTTPS to SSH
 fix-dotfiles-upstream() {
   local -A repos=(
     [chezmoi]="$HOME/.local/share/chezmoi"
@@ -110,7 +96,6 @@ fix-dotfiles-upstream() {
   done
 }
 
-# Open a file or directory with the right app
 o() {
   local target="${1:-.}"
 
@@ -120,16 +105,14 @@ o() {
   local winpath
   winpath="$(wslpath -w "$target")"
 
-  # Clean up leftover suspended explorer.exe stubs from previous calls
+  # Kill suspended explorer.exe stubs left by previous calls
   pkill -x -T explorer.exe 2>/dev/null
 
-  # Dispatch by extension
   case "${target:l}" in
     *.drawio.*)
       "/mnt/c/Program Files/draw.io/draw.io.exe" "$winpath" &>/dev/null &!
       ;;
     *)
-      # Directories and all other files: let Windows pick the default app
       explorer.exe "$winpath" &>/dev/null &!
       ;;
   esac
@@ -137,5 +120,4 @@ o() {
   xdg-open "$target" &
 {{- end }}
 }
-
 

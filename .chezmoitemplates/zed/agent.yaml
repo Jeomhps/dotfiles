@@ -1,4 +1,3 @@
-# Agent settings for Zed
 agent:
   default_model:
     effort: "high"

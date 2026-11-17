@@ -1,17 +1,15 @@
 {{- $p := includeTemplate "platform.json" . | fromJson -}}
 
-# ── Prompt & history tools (must be last) ────────────────────────────────────
-
-# Syntax highlighting theme (must come before the plugin itself on macOS)
+# Theme must be sourced before the plugin
 source "$HOME/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh"
 
-# Zsh plugins — on macOS installed via Homebrew, on NixOS enabled system-wide
+# NixOS enables these system-wide
 {{- if $p.isDarwin }}
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 {{- end }}
 
-# Disable built-in zsh history (atuin replaces it entirely)
+# atuin replaces zsh history
 unsetopt APPEND_HISTORY
 unsetopt INC_APPEND_HISTORY
 unsetopt SHARE_HISTORY
@@ -19,11 +17,9 @@ HISTSIZE=1000
 SAVEHIST=0
 HISTFILE=/dev/null
 
-# zoxide — smarter cd (replaces z/autojump), must be before starship
+# Order matters: zoxide, starship, then atuin last
 eval "$(zoxide init zsh)"
 
-# Starship prompt
 eval "$(starship init zsh)"
 
-# Atuin — shell history (must be last)
 eval "$(atuin init zsh)"

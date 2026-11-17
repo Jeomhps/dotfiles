@@ -24,5 +24,5 @@ gui:
     "*": "#b4befe"
 
 git:
-  # Remotes use YubiKey sk keys without ControlMaster: a background fetch would ask for a touch every minute
+  # sk keys without ControlMaster: every fetch needs a touch
   autoFetch: false

@@ -1,6 +1,5 @@
 #!/bin/sh
-# Leave ~/.ssh/config unmanaged, only make sure it pulls in ~/.ssh/config.d/
-# (Include must come before any Host block, so it goes at the top)
+# ~/.ssh/config stays unmanaged; only ensure the Include, which must precede any Host
 line='Include ~/.ssh/config.d/*'
 input=$(cat)
 if printf '%s\n' "$input" | grep -qxF "$line"; then

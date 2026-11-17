@@ -1,4 +1,3 @@
-# Tasks for Zed
 - label: "Edit Zed Settings Template"
   command: "zed"
   args:

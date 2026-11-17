@@ -1,4 +1,3 @@
-# Theme settings for Zed
 icon_theme: "Catppuccin Mocha"
 theme:
   mode: "system"

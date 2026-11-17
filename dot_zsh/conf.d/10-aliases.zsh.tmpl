@@ -1,8 +1,5 @@
 {{- $p := includeTemplate "platform.json" . | fromJson -}}
 
-# ── Aliases ───────────────────────────────────────────────────────────────────
-
-# General
 alias py='python3'
 alias home='cd ~'
 alias ..='cd ..'
@@ -12,12 +9,10 @@ alias cat='bat -p'
 alias df='duf'
 alias g='lazygit'
 
-# ls / eza (auto: no colors/icons when piped or redirected)
 alias ls='eza --color=auto --group-directories-first --icons=auto'
 alias ll='eza -l --color=auto --group-directories-first --icons=auto'
 alias la='eza -la --color=auto --group-directories-first --icons=auto'
 
-# Editor
 {{- if or $p.isDarwin $p.isWSL }}
 alias v='nvim'
 {{- else if $p.isNixOS }}
@@ -26,12 +21,9 @@ alias v='hx'
 alias v='nvim'
 {{- end }}
 
-# NixOS
 {{- if $p.isNixOS }}
 {{- if and $p.isWSL (index . "gpg_enabled") }}
-# rebuild switch restarts gpg-agent, which forgets the tty -- refresh it so
-# gpg prompts (gopass unlocks, gpg-based commit signing) don't break until a
-# new shell is opened
+# rebuild restarts gpg-agent, which forgets the tty
 alias update='sudo nixos-rebuild switch --flake .# && gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1'
 alias upgrade='nix flake update && sudo nixos-rebuild switch --flake .# && gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1'
 alias rollback='sudo nixos-rebuild switch --flake .# --rollback && gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1'
@@ -47,7 +39,6 @@ alias nix-info='nixos-version && nix --version'
 alias nix-gen='sudo nix-env --list-generations --profile /nix/var/nix/profiles/system'
 {{- end }}
 
-# macOS / Homebrew
 {{- if $p.isDarwin }}
 alias bbedit='brew bundle edit --global'
 alias bbinstall='brew bundle install --global'
@@ -57,7 +48,6 @@ alias bbupgrade='brew update && brew upgrade && brew bundle install --global --u
 alias doc='cd ~/Documents/'
 {{- end }}
 
-# WSL
 {{- if $p.isWSL }}
 alias copy='clip.exe'
 {{- end }}

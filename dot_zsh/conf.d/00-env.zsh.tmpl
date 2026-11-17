@@ -1,16 +1,9 @@
 {{- $p := includeTemplate "platform.json" . | fromJson -}}
 
-# ── Interactive-shell environment ────────────────────────────────────────────
-# PATH and the plain exports live in ~/.zshenv so non-interactive shells get
-# them too. Only things that need a terminal belong here.
+# Interactive only; plain env vars go in ~/.zshenv
 
 {{- if and $p.isWSL (index . "gpg_enabled") }}
-# No GUI pinentry available in WSL -- GPG_TTY lets pinentry-curses prompt in
-# the current terminal whenever gpg-agent needs it (gopass unlocks, and git
-# commit signing when work_signing_method = "gpg").
+# No GUI pinentry in WSL: pinentry-curses needs the tty
 export GPG_TTY="$(tty)"
-# gpg-agent forgets this tty after a rebuild, so any gpg prompt (gopass
-# unlocks, gpg-based commit signing) breaks until a new shell is opened --
-# see 10-aliases.zsh.tmpl for the update/upgrade fix.
 gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1
 {{- end }}

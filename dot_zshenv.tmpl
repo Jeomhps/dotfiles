@@ -1,19 +1,8 @@
 {{- $p := includeTemplate "platform.json" . | fromJson -}}
-# ── .zshenv ───────────────────────────────────────────────────────────────────
-# Sourced by *every* zsh: interactive, login, scripts, git hooks, `ssh host cmd`
-# and GUI-launched processes. Environment and PATH live here so they are not
-# limited to interactive shells.
-#
-# Anything that runs a command, writes output, or touches the terminal must NOT
-# go here — it would run for every script too. That belongs in ~/.zsh/conf.d/.
-#
-# This file replaces the one rustup writes (which only sources ~/.cargo/env to
-# prepend ~/.cargo/bin); that path is folded into the PATH lists below.
+# Sourced by every zsh (scripts too): env and PATH only, nothing that prints or
+# touches the terminal. Replaces rustup's version; ~/.cargo/bin is in PATH below.
 
-# Dedupe PATH, so re-sourcing reorders instead of appending another copy.
-# -x is explicit: if zsh started with no PATH in the environment at all
-# (launchd, cron), a bare `typeset -U` would leave PATH unexported and every
-# child process would get an empty PATH.
+# -x: without it, a zsh started with no PATH (launchd, cron) leaves it unexported
 typeset -gxU path PATH
 
 export LANG="en_US.UTF-8"
@@ -58,6 +47,5 @@ export EDITOR="nvim"
 
 {{- if and (not $p.isNixOS) (not $p.isWindows) }}
 
-# Point neovim to the nvim/ subdirectory inside the cloned repo
 export NVIM_APPNAME="neovim-config/nvim"
 {{- end }}

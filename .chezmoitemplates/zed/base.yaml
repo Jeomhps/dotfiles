@@ -1,4 +1,3 @@
-# Base settings for Zed
 colorize_brackets: true
 language_models:
   bedrock:

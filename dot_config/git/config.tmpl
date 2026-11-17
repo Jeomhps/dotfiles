@@ -15,7 +15,6 @@
 [includeIf "hasconfig:remote.*.url:ssh://git@codeberg.org/**"]
 	path = ~/.config/git/config-personal-codeberg
 
-# My Forgejo (git.jeomhps.com, SSH on 2223 via ~/.ssh/config)
 [includeIf "hasconfig:remote.*.url:git@git.jeomhps.com:*/**"]
 	path = ~/.config/git/config-personal-forgejo
 
@@ -35,7 +34,7 @@
     {{- else if $p.isDarwin }}
 	helper = osxkeychain
 	{{- end }}
-	useHttpPath = false # only useful when in multi-user for one host
+	useHttpPath = false
 
 [color]
 	ui = auto
