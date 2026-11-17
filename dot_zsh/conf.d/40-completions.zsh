@@ -3,12 +3,19 @@
 # Initialize the completion system
 autoload -Uz compinit
 
-# Only regenerate the dump file once per day for speed
-if [[ -n "$HOME/.zcompdump"(#qN.mh+24) ]]; then
-  compinit
-else
-  compinit -C
-fi
+# Only regenerate the dump file once per day for speed.
+# (#q) glob qualifiers need extendedglob, kept local to this anonymous function.
+# compinit only rewrites the dump when completions changed, so touch it to
+# restart the 24h window.
+() {
+  setopt local_options extended_glob
+  if [[ -n $HOME/.zcompdump(#qN.mh+24) ]]; then
+    compinit
+    touch "$HOME/.zcompdump"
+  else
+    compinit -C
+  fi
+}
 
 # Case-insensitive matching, then partial-word, then substring
 zstyle ':completion:*' matcher-list \
