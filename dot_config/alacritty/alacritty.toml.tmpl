@@ -38,3 +38,16 @@ program = "/run/current-system/sw/bin/zsh"
 key = "Return"
 mods = "Shift"
 chars = "\u001B\r"
+{{- if $p.isDarwin }}
+
+# Same as Linux terminals; Ctrl+C stays interrupt
+[[keyboard.bindings]]
+key = "C"
+mods = "Control|Shift"
+action = "Copy"
+
+[[keyboard.bindings]]
+key = "V"
+mods = "Control|Shift"
+action = "Paste"
+{{- end }}
