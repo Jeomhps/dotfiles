@@ -1,0 +1,25 @@
+# Personal hosts, all on YubiKey resident (sk) keys. Managed by chezmoi;
+# ~/.ssh/config itself stays unmanaged (work hosts, colima) and just Includes this dir.
+# New machine: `cd ~/.ssh && ssh-keygen -K` with the YubiKey plugged in, then rename the stubs.
+# No ControlMaster on purpose: every connection needs a touch.
+
+Host github.com
+  IdentityFile ~/.ssh/id_ed25519_sk_rk_github
+  IdentityAgent none
+  IdentitiesOnly yes
+
+# Forgejo on the VPS: its own SSH server, git only (system SSH is vps, 2222)
+Host git.jeomhps.com
+  Port 2223
+  User git
+  IdentityFile ~/.ssh/id_ed25519_sk_rk_vps-jeomhps
+  IdentityAgent none
+  IdentitiesOnly yes
+
+Host vps
+  HostName vps.jeomhps.com
+  Port 2222
+  User admin
+  IdentityFile ~/.ssh/id_ed25519_sk_rk_vps-jeomhps
+  IdentityAgent none
+  IdentitiesOnly yes

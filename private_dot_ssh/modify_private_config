@@ -1,0 +1,10 @@
+#!/bin/sh
+# Leave ~/.ssh/config unmanaged, only make sure it pulls in ~/.ssh/config.d/
+# (Include must come before any Host block, so it goes at the top)
+line='Include ~/.ssh/config.d/*'
+input=$(cat)
+if printf '%s\n' "$input" | grep -qxF "$line"; then
+  printf '%s\n' "$input"
+else
+  printf '%s\n\n%s\n' "$line" "$input"
+fi

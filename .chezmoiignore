@@ -22,6 +22,7 @@ LICENSE
 .zsh/
 .config/alacritty
 .config/git
+.ssh
 .config/starship.toml
 .config/fastfetch
 .config/helix
@@ -35,4 +36,10 @@ LICENSE
 # Windows-only
 {{ if not $p.isWindows }}
 AppData/
+{{ end }}
+
+# Personal ssh hosts (YubiKey sk keys) would shadow a work machine's own github.com entry.
+# Skipped where work data is set, unless personal_ssh = true.
+{{ if and (index . "work_vcs_host") (not (index . "personal_ssh")) }}
+.ssh/config.d/personal
 {{ end }}
