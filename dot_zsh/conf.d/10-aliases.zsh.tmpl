@@ -42,7 +42,7 @@ alias nix-gen='sudo nix-env --list-generations --profile /nix/var/nix/profiles/s
 {{- if $p.isDarwin }}
 alias bbedit='brew bundle edit --global'
 alias bbinstall='brew bundle install --global'
-alias bbclean='brew bundle --global --cleanup'
+alias bbclean='brew bundle install --global && brew bundle cleanup --global --force'
 alias bbcheck='brew bundle check --global'
 alias bbupgrade='brew update && brew upgrade && brew bundle install --global --upgrade'
 alias doc='cd ~/Documents/'
