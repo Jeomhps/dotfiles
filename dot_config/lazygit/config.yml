@@ -22,3 +22,7 @@ gui:
 
   authorColors:
     "*": "#b4befe"
+
+git:
+  # Remotes use YubiKey sk keys without ControlMaster: a background fetch would ask for a touch every minute
+  autoFetch: false
